@@ -2,9 +2,21 @@
 
 Welcome to Ember-CLI 101 workshop hosted by [San Diego Ember][] with help from our friends at [Ember-SC][].
 
-## What is Ember
+## Pre-event setup instructions
 
-## What is Ember-CLI?
+Please follow these instructions to have your system setup before the workshop begins.
+
+TODO: Add setup instructions
+
+## Introduction
+
+### Why Ember?
+
+TODO: explain what Ember is and such
+
+### Why Ember-CLI?
+
+TODO: explain what ember-cli does
 
 [san diego ember]: http://www.meetup.com/sandiego-ember/
 [ember-sc]: http://www.meetup.com/ember-sc
