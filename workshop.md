@@ -18,5 +18,9 @@ TODO: explain what Ember is and such
 
 TODO: explain what ember-cli does
 
+## Project Structure
+
+TODO: explain how ember-cli works
+
 [san diego ember]: http://www.meetup.com/sandiego-ember/
 [ember-sc]: http://www.meetup.com/ember-sc
