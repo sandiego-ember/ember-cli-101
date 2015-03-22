@@ -43,10 +43,31 @@ Ember-CLI provides choices for all of the aforementioned areas.  We'll dive into
 0. And create a new project named 'workshop': `ember new workshop`
 
 ### 6. Project Organization: High level
-0. /app
-0. /tests
-0. bower.json
-0. package.json
+
+Now that you have an Ember-CLI generated project, let's step inside and start exploring:
+
+    $ cd workshop
+    $ ls
+    Brocfile.js             bower.json              node_modules            testem.json
+    README.md               bower_components        package.json            tests
+    app                     config                  public                  vendor
+
+##### 1. Package.json and node_modules
+The first things to notice is the file package.json and the directory node_modules.  These are from npm, and if you're new to NPM, take a look at what is in the package.json file.  This file contains information about packaging up your application as a module itself, but more importantly for our purposes it contains information about what npm modules are required to run and develop our app.  As we're building a client-side application, we're unlikely to require any npm modules to run it, but all of the various ember/brocolli/etc tools that we end up needing will be specified in this package.json and installed into the node_modules directory.
+##### 2. bower.json and bower_components
+The next thing to look at is the file bower.json and the bower_components directory.  Bower has become the defacto standard in package management for front end applications, and our Ember-CLI application will use it to manage our dependencies.  If you open up that file you'll see that our application comes out of the box with not only Ember itself but jQuery, Ember Data (a powerful data persistence library), and qunit.
+
+##### 3. The 'tests' directory
+TODO:  Someone with more experience in ember testing land should write this
+
+##### 4. The 'app' directory
+The app directory is where we're going to put all of our application code.  It is carefully structured with an appropriate place for each type of module:
+
+    $ ls app
+    app.js          controllers     index.html      router.js       styles          views
+    components      helpers         models          routes          templates
+
+Some of these may sound familiar to you, while others may be brand new.  Don't worry yet if you don't know what all of these different pieces are.  We'll get to them one by one.
 
 ### 7. Ready to code!
 0. `ember serve`
