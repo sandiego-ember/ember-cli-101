@@ -28,4 +28,16 @@
 0. Ready to code!
     0. `ember serve`
     0. http://localhost:4200
-
+0. Setup ember-data with our API endpoint? Or setup fixtures?
+0. Blog post model
+    0. Make a blog post model (using generator)
+    0. Add logical fields to blog post model
+    0. Write a test? Show that our model works in some other way?
+0. Blog post route(s)
+    0. Make a blog post route/template and test it out
+    0. Make blog posts show up on the homepage?
+0. Blog comment
+    0. Make blog comment model and relate to post
+    0. Make comments show up on blog post detail page
+0. Submitting a comment
+    0. Add form to submit a comment
