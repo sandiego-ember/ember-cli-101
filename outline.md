@@ -4,7 +4,7 @@
  You can get $10 off for San Diego Ember group: https://leanpub.com/ember-cli-101/c/san-diego-101
 
 ### 2. Goal: reduce the glue
-  There are all sorts of details that go into creating a web application that are repeated over and over again.  Attempting to reduce the work associated with this has given rise to a variety of scaffolding tools and guidelines on best choices.  These scaffolding tools are all trying to do the same thing:  reduce the amount of work necessary to "get started" by providing a set of "best practice" choices that serve right out of the box.  These choices include things like:
+There are all sorts of details that go into creating a web application that are repeated over and over again.  Attempting to reduce the work associated with this has given rise to a variety of scaffolding tools and guidelines on best choices.  These scaffolding tools are all trying to do the same thing:  reduce the amount of work necessary to "get started" by providing a set of "best practice" choices that serve right out of the box.  These choices include things like:
 
 0. Application directory structure
 0. Generators for common components
@@ -34,10 +34,13 @@ Ember-CLI provides choices for all of the aforementioned areas.  We'll dive into
     0. children in subdirectory → `routes/invoices/edit.js` & `routes/invoices/new.js`
 
 ### 5. Setup
-0. Node.js
-0. NPM, not sudo
-0. `npm i -g ember-cli`
-0. `ember new project`
+0. Install Node.js.  Files and instructions can be found [here](https://nodejs.org/download/).
+0. Set up NPM for non-sudo installation
+    0. NPM is the node package manager.  It will automatically be installed when you install node.
+    0. NPM installs packages *locally* (within the directory it is invoked in) for per-project modules, or *globally* for packages you want accessible everyewher.
+    0. However, by default NPM installs global packages in a root-restricted location, requiring SUDO to install.  This creates a **huge** headache.  As an alternative, _before_ you install any packages, follow (this guide)[https://github.com/sindresorhus/guides/blob/master/npm-global-without-sudo.md] to configure your npm to install in your home directory without requiring sudo.
+0. Now let's install Ember-CLI: `npm i -g ember-cli`
+0. And create a new project named 'workshop': `ember new workshop`
 
 ### 6. Project Organization: High level
 0. /app
