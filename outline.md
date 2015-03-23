@@ -76,9 +76,37 @@ Some of these may sound familiar to you, while others may be brand new.  Don't w
 ### 8. Setup ember-data with our API endpoint? Or setup fixtures?
 
 ### 9. Blog post model
-0. Make a blog post model (using generator)
-0. Add logical fields to blog post model
-0. Write a test? Show that our model works in some other way?
+##### 1. Make a blog post model
+For our test application, we're going to create a blog.  Let's start off by using a generator to create a model for the blogPost.  We'll give it a couple of basic fields and take a look at what happens.
+
+    $ ember generate model blogPost title:string body:string
+    installing
+        create app/models/blog-post.js
+    installing
+        create tests/unit/models/blog-post-test.js
+
+OK, Ember-CLI has just created for us both a model file in app/models and a test in tests/unit/models/.  Let's take a look at the model and see what it contains:
+
+    import DS from 'ember-data';
+
+    export default DS.Model.extend({
+      title: DS.attr('string'),
+      body: DS.attr('string')
+     });
+
+What is that funky syntax?  `import DS from 'ember-data'` and `export default DSModel.extend()`?  Welcome to ES6 modules.  The Ecmascript 6 standard specifies this as the standard way to define modules, and thanks to the magic of transpilers we can already use them today even though no browsers actually support ES6.  If you're familiar with node or AMD modules, it should be pretty easy to figure out what's going on here, there's just slightly different syntax.  We're importing a module from 'ember-data' and calling it DS.  Then we're extending the DS.Model class and returning that as the module this class defines.
+
+Looking a little more into the body of the code, we see that our model is specifying exactly what fields it intends to have, in this case a title and a string.  If we later decide we want another field (perhaps a published date) we need only extend this model that the generator created for us.
+
+    import DS from 'ember-data';
+
+    export default DS.Model.extend({
+      title: DS.attr('string'),
+      body: DS.attr('string'),
+      publishedDate: DS.attr('date')
+    });
+
+#### 2. TODO:  Write a test? Show that our model works in some other way?
 
 ### 10. Blog post route(s)
 0. Make a blog post route/template and test it out
