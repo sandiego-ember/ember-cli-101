@@ -151,6 +151,9 @@ Just this funky thing called {{outlet}}.  The syntax should look familiar to mos
 
 and take a look at our route at http://localhost:4200/blog-posts
 
+0. Add new route with template.  Cover binding, highlight nesting
+0. Add show route with template.
+0. Add index page.
 0. Make blog posts show up on the homepage?
 
 ### 11. Blog comment
