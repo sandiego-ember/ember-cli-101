@@ -109,7 +109,48 @@ Looking a little more into the body of the code, we see that our model is specif
 #### 2. TODO:  Write a test? Show that our model works in some other way?
 
 ### 10. Blog post route(s)
-0. Make a blog post route/template and test it out
+
+If we want to actually see our model in our website, we need to actually render something to HTML.  Ember's view layer places routes and their associated URLs front and center in the architecture.  The way to show something is to create a route and associated template.  Let's start once again from a generator:
+
+    $ ember generate route blog-posts --type=resource
+    installing
+      create app/routes/blog-posts.js
+      create app/templates/blog-posts.hbs
+    installing
+      create tests/unit/routes/blog-posts-test.js
+
+This creates a few files, and also adds some code to `app/router.js`:
+
+    import Ember from 'ember';
+    import config from './config/environment';
+
+    var Router = Ember.Router.extend({
+      location: config.locationType
+    });
+
+    Router.map(function() {
+      this.resource('blog-posts', function() {});
+    });
+
+    export default Router;
+
+We can see that the route to 'blog-posts' is being set up... we'll come back to that empty function, as it will become important for us soon.  Now looking at app/routes/blog-posts.js we see:
+
+    import Ember from 'ember';
+
+    export default Ember.Route.extend({                                                                                 });
+
+This is where we'll set up any data we need to render the template.  And speaking of the template, let's look at what app/templates/blog-posts.hbs contains:
+
+    {{outlet}}
+
+Just this funky thing called {{outlet}}.  The syntax should look familiar to most javascript developers - Ember.js uses handlebars for templating, and the 'outlet' variable is a special variable that Ember uses to say "insert any subtemplates here".  If you've done anything with ruby on rails, think 'yield' and you'll be awfully close.  Let's update the template to give ourselves a header:
+
+    <h2>My Blog</h2>
+    {{outlet}}
+
+and take a look at our route at http://localhost:4200/blog-posts
+
 0. Make blog posts show up on the homepage?
 
 ### 11. Blog comment
