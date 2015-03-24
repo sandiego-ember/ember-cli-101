@@ -108,7 +108,7 @@ Looking a little more into the body of the code, we see that our model is specif
 
 #### 2. TODO:  Write a test? Show that our model works in some other way?
 
-### 10. Blog post route(s)
+### 10. Initial Blog Route
 
 If we want to actually see our model in our website, we need to actually render something to HTML.  Ember's view layer places routes and their associated URLs front and center in the architecture.  The way to show something is to create a route and associated template.  Let's start once again from a generator:
 
@@ -149,16 +149,65 @@ Just this funky thing called {{outlet}}.  The syntax should look familiar to mos
     <h2>My Blog</h2>
     {{outlet}}
 
-and take a look at our route at http://localhost:4200/blog-posts
+and take a look at our new route at http://localhost:4200/blog-posts
+
+Our 'My Blog' header should appear nicely beneath our application header.
+
+### 11 Diversion: API and serializers
+
+Now we're just about ready to start diving in and actually creating blog posts and looking at them - just one thing missing:  A backend to store that data!  Ember is a client side framework and so when we have data that we want to persist, we need a back end API.  Luckily, for this workshop we've set one up for you at http://sandiego-ember-cli-101.heroku.com supporting the following endpoints
+
+<table>
+<tr><th>Verb</th><th>path</th><th>Description</th></tr>
+<tr><td>GET</td><td>/blog-posts</td><td>List of blog posts</td></tr>
+<tr><td>POST</td><td>/blog-posts</td><td>Create a blog post</td></tr>
+<tr><td>GET</td><td>/blog-posts/:id</td><td>Retrieve a post</td></tr>
+<tr><td>PUT</td><td>/blog-posts/:id</td><td>Update a post</td></tr>
+<tr><td>DELETE</td><td>/blog-posts/:id</td><td>Delete a post</td></tr>
+
+</table>
+
+This particular API was built with Ruby on Rails and thus uses the rails standard snake_case for the JSON that it sends.  But Ember expects things to be camelCase, so how can we connect these two nicely?  Luckily, Ember Data already has us covered with the concept of an adapter, which allows us to specify how to adapt the format from any API.  We can set up an adapter at the level of an individual model, but since we'll be using the same API for all of our models, let's set one up for the entire application:
+
+    $ ember g adapter application
+    version: 0.2.0
+      installing
+        create app/adapters/application.js
+      installing
+        create tests/unit/adapters/application-test.js
+
+Let's open up that adapter and see what we can see:
+
+	import DS from 'ember-data';
+
+	export default DS.RESTAdapter.extend({
+	});
+	
+Not much going on, we're using an Ember Data builtin adapter called the RESTAdapter.  Building a custom adapter isn't too hard, but luckily for us we don't need to... Ember Data already has an adapter custom built for Rails apis.  We just need to update this file as follows:
+
+	import DS from 'ember-data';
+
+	export default DS.ActiveModelAdapter.extend({
+	});
+	
+Finally, to point our ember app at the API we've set up, we simply restart our 'ember serve' using the proxy option to point Ember to the api we want to access:
+
+    $ ember serve --proxy http://sandiego-ember-cli-101.heroku.com
+	version: 0.2.1
+	Proxying to http://sandiego-ember-cli-101.heroku.com
+	Livereload server on port 35729
+	Serving on http://localhost:4200/
+
+###    Additional Blog post route(s)
 
 0. Add new route with template.  Cover binding, highlight nesting
 0. Add show route with template.
 0. Add index page.
 0. Make blog posts show up on the homepage?
 
-### 11. Blog comment
+### 13. Blog comment
 0. Make blog comment model and relate to post
 0. Make comments show up on blog post detail page
 
-### 12. Submitting a comment
+### 14. Submitting a comment
 0. Add form to submit a comment
