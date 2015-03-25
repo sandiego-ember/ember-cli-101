@@ -155,7 +155,7 @@ Our 'My Blog' header should appear nicely beneath our application header.
 
 ### 11 Diversion: API and serializers
 
-Now we're just about ready to start diving in and actually creating blog posts and looking at them - just one thing missing:  A backend to store that data!  Ember is a client side framework and so when we have data that we want to persist, we need a back end API.  Luckily, for this workshop we've set one up for you at http://sandiego-ember-cli-101.heroku.com supporting the following endpoints
+Now we're just about ready to start diving in and actually creating blog posts and looking at them - just one thing missing:  A backend to store that data!  Ember is a client side framework and so when we have data that we want to persist, we need a back end API.  Luckily, for this workshop we've set one up for you at https://sandiego-ember-cli-101.herokuapp.com supporting the following endpoints
 
 <table>
 <tr><th>Verb</th><th>path</th><th>Description</th></tr>
@@ -182,19 +182,19 @@ Let's open up that adapter and see what we can see:
 
 	export default DS.RESTAdapter.extend({
 	});
-	
+
 Not much going on, we're using an Ember Data builtin adapter called the RESTAdapter.  Building a custom adapter isn't too hard, but luckily for us we don't need to... Ember Data already has an adapter custom built for Rails apis.  We just need to update this file as follows:
 
 	import DS from 'ember-data';
 
 	export default DS.ActiveModelAdapter.extend({
 	});
-	
+
 Finally, to point our ember app at the API we've set up, we simply restart our 'ember serve' using the proxy option to point Ember to the api we want to access:
 
-    $ ember serve --proxy http://sandiego-ember-cli-101.heroku.com
+    $ ember serve --proxy https://sandiego-ember-cli-101.herokuapp.com
 	version: 0.2.1
-	Proxying to http://sandiego-ember-cli-101.heroku.com
+	Proxying to https://sandiego-ember-cli-101.herokuapp.com
 	Livereload server on port 35729
 	Serving on http://localhost:4200/
 
