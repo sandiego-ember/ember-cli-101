@@ -122,27 +122,27 @@ Looking a little more into the body of the code, we see that our model is specif
 #### 2. Test our blog post model
 Testing can seem daunting if you put it off for too long so lets get right to it and write a test for that model we just created. Ember-CLI has us covered, again, with the generators. We are going to use a generator to create our `blog-post` test.
 
-	$ ember generate model-test blog-post
-	installing
-	  create tests/unit/models/blog-post-test.js
-	  
+    $ ember generate model-test blog-post
+    installing
+      create tests/unit/models/blog-post-test.js
+
 Pretty handy, huh? Let's look at what ember-cli generated for us...
 
-	import {
-	  moduleForModel,
-	  test
-	} from 'ember-qunit';
+    import {
+      moduleForModel,
+      test
+    } from 'ember-qunit';
 
-	moduleForModel('blog-post', {
-	  // Specify the other units that are required for this test.
+    moduleForModel('blog-post', {
+      // Specify the other units that are required for this test.
 
-	});
+    });
 
-	test('it exists', function(assert) {
-	  var model = this.subject();
-	  // var store = this.store();
-	  assert.ok(!!model);
-	});
+    test('it exists', function(assert) {
+      var model = this.subject();
+      // var store = this.store();
+      assert.ok(!!model);
+    });
 
 That looks like a lot! First is the import statement. This is how, using ES6 module syntax, we can import the parts of the `ember-qunit` package we need for our test.
 
@@ -208,68 +208,68 @@ Our 'My Blog' header should appear nicely beneath our application header.
 
 It would be useful to provide a link at the root of our application to our blog posts so that when we visit `http://localhost:4200` we can easily jump to our blog-posts. To add this link open up the `app/templates/application.hbs` file and see what is there:
 
-	<h2 id="title">Welcome to Ember.js</h2>
+    <h2 id="title">Welcome to Ember.js</h2>
 
-	{{outlet}}
+    {{outlet}}
 
 We're only going to add one small line here to link to our `blog-posts` route and that uses a special handlebars template called `link-to`. Imagine that! Update your `application.hbs` so that it looks like this:
 
-	<h2 id="title">Welcome to Ember.js</h2>
-	{{link-to 'Blog Posts' 'blog-posts'}}
+    <h2 id="title">Welcome to Ember.js</h2>
+    {{link-to 'Blog Posts' 'blog-posts'}}
 
-	{{outlet}}
+    {{outlet}}
 
 Now take a look at `http://localhost:4200` and a link should appear. **Click it!** And now you're at the blog-posts route. That was easy.
 
 #### 4. Acceptance testing
 With some user interaction added to our application we can now create an acceptance test. So what did we just do? We opened up the root of our application, clicked a link, and it brought us to the `blog-posts` route. Let's make a test for that! Even though there is only one link right now we will add others so we can name this test `app-navigation` and can add to it as we add more links to our `application.hbs`.
 
-	$ ember generate acceptance-test app-navigation
-	installing
-	  create tests/acceptance/app-navigation-test.js
-	
+    $ ember generate acceptance-test app-navigation
+    installing
+      create tests/acceptance/app-navigation-test.js
+
 Open the newly created file `tests/acceptance/app-navigation-test.js` and see what is there:
 
-	import Ember from 'ember';
-	import {
-	  module,
-	  test
-	} from 'qunit';
-	import startApp from 'workshop/tests/helpers/start-app';
+    import Ember from 'ember';
+    import {
+      module,
+      test
+    } from 'qunit';
+    import startApp from 'workshop/tests/helpers/start-app';
 
-	var application;
+    var application;
 
-	module('Acceptance: AppNavigation', {
-	  beforeEach: function() {
-	    application = startApp();
-	  },
-	
-	  afterEach: function() {
-	    Ember.run(application, 'destroy');
-	  }
-	});
+    module('Acceptance: AppNavigation', {
+      beforeEach: function() {
+        application = startApp();
+      },
 
-	test('visiting /app-navigation', function(assert) {
-	  visit('/app-navigation');
+      afterEach: function() {
+        Ember.run(application, 'destroy');
+      }
+    });
 
-	  andThen(function() {
-	    assert.equal(currentPath(), 'app-navigation');
-	  });
-	});
+    test('visiting /app-navigation', function(assert) {
+      visit('/app-navigation');
+
+      andThen(function() {
+        assert.equal(currentPath(), 'app-navigation');
+      });
+    });
 
 Hm... this isn't exactly what we want. We don't have an 'app-navigation' route, but the ember generator assumed we did based on the naming. Let's remove that test and add one for our link-to helper instead.
 
-	test('clicking blog posts link visits /blog-posts', function(assert) {
-	  visit('/');
-	  
-	  andThen(function() {
-	  	click('a:contains("Blog Posts")');
-	  });
+    test('clicking blog posts link visits /blog-posts', function(assert) {
+      visit('/');
 
-	  andThen(function() {
-	    assert.equal(currentPath(), 'blog-posts.index');
-	  });
-	});
+      andThen(function() {
+          click('a:contains("Blog Posts")');
+      });
+
+      andThen(function() {
+        assert.equal(currentPath(), 'blog-posts.index');
+      });
+    });
 
 There are a few helpers here that we will use **a lot** when writing acceptance tests.
 
@@ -305,25 +305,25 @@ This particular API was built with Ruby on Rails and thus uses the rails standar
 
 Let's open up that adapter and see what is there:
 
-	import DS from 'ember-data';
+    import DS from 'ember-data';
 
-	export default DS.RESTAdapter.extend({
-	});
+    export default DS.RESTAdapter.extend({
+    });
 
 Not much going on, we're using an Ember Data builtin adapter called the RESTAdapter. Building a custom adapter isn't too hard, but luckily for us we don't need to... Ember Data already has an adapter custom built for Rails APIs. We just need to update this file to use that special adapter as follows:
 
-	import DS from 'ember-data';
+    import DS from 'ember-data';
 
-	export default DS.ActiveModelAdapter.extend({
-	});
+    export default DS.ActiveModelAdapter.extend({
+    });
 
 Finally, to point our ember app at the API we've set up, we simply restart our 'ember serve' using the proxy option to point Ember to the api we want to access:
 
     $ ember serve --proxy https://sandiego-ember-cli-101.herokuapp.com
-	version: 0.2.1
-	Proxying to https://sandiego-ember-cli-101.herokuapp.com
-	Livereload server on port 35729
-	Serving on http://localhost:4200/
+    version: 0.2.1
+    Proxying to https://sandiego-ember-cli-101.herokuapp.com
+    Livereload server on port 35729
+    Serving on http://localhost:4200/
 
 ### Create New Blog Post
 
