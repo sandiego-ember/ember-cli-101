@@ -120,13 +120,12 @@ Looking a little more into the body of the code, we see that our model is specif
     });
 
 #### Test our blog post model
-Testing can seem daunting if you put it off for too long so lets get right to it and write a test for that model we just created. Ember-CLI has us covered, again, with the generators. We are going to use a generator to create our `blog-post` test.
+Testing can seem daunting if you put it off for too long so lets get right to it and write a test for that model we just created. Ember-CLI has us covered. Our model generation above also generated a test module for our blog post model:
 
-    $ ember generate model-test blog-post
-    installing
-      create tests/unit/models/blog-post-test.js
+    $ ls tests/unit/models
+    blog-post-test.js
 
-Pretty handy, huh? Let's look at what ember-cli generated for us...
+Pretty cool, huh? Let's open up `tests/unit/models/blog-post-test.js` and see what Ember-CLI generated for us:
 
     import {
       moduleForModel,
