@@ -153,132 +153,99 @@ Since we have about as much as we can test in here already for our small model, 
 
 **ProTip™** If you ever need to know what generators are available, just type `ember help generate` and enjoy a deliciously long list of generating goodness.
 
-### 10. Initial blog posts route
+### 10. Adding blog posts to our homepage
 
 #### Create the route
-If we want to actually see our model in our website, we need to actually render something to HTML.  Ember's view layer places routes and their associated URLs front and center in the architecture.  The way to show something is to create a route and associated template.  Let's start once again from a generator:
 
-    $ ember generate route blog-posts --type=resource
+If we want to see blog posts on our website, we need to render them into our HTML.  Ember's view layer places routes and their associated URLs front and center.  The way to show something is to create a route and associated template.
+
+Let's start once again from a generator, this time for our index page route:
+
+    $ ember generate route index
     installing
-      create app/routes/blog-posts.js
-      create app/templates/blog-posts.hbs
+      create app/routes/index.js
+      create app/templates/index.hbs
     installing
-      create tests/unit/routes/blog-posts-test.js
+      create tests/unit/routes/index-test.js
 
-This creates a few files, and also adds some code to `app/router.js`:
+This creates a few files for our index route and template file.
 
-    import Ember from 'ember';
-    import config from './config/environment';
-
-    var Router = Ember.Router.extend({
-      location: config.locationType
-    });
-
-    Router.map(function() {
-      this.resource('blog-posts', function() {});
-    });
-
-    export default Router;
-
-We can see that the route to 'blog-posts' is being set up... we'll come back to that empty function, as it will become important for us soon.  Now looking at `app/routes/blog-posts.js` we see:
+Looking at `app/routes/index.js` we see:
 
     import Ember from 'ember';
 
     export default Ember.Route.extend({
     });
 
+
 #### Update the template
-This is where we'll set up any data we need to render the template.  And speaking of the template, let's look at what `app/templates/blog-posts.hbs` contains:
+
+Let's take a look at the template file that was generated for us in `app/templates/index.hbs`:
 
     {{outlet}}
 
-Just this funky thing called `{{outlet}}`.  The syntax should look familiar to most javascript developers - Ember.js uses handlebars for templating, and the 'outlet' variable is a special variable that Ember uses to say "insert any subtemplates here".  If you've done anything with ruby on rails, think `yield` and you'll be awfully close.  Let's update the template to give ourselves a header:
+Just this funky thing called `{{outlet}}`.  Ember.js uses handlebars for templating, and the `outlet` variable is a special variable that Ember uses to say "insert any subtemplates here".  If you've done anything with ruby on rails, think `yield` and you'll be awfully close.  Our `index` template is the end of the line for our homepage so let's remove the `{{outlet}}` and add a sample post:
 
-    <h2>My Blog</h2>
-    {{outlet}}
+    <article>
+      <h2>My Blog Post</h2>
+      <p>This is a test post.</p>
+    </article>
 
-and take a look at our new route at `http://localhost:4200/blog-posts`
+If you already have `http://localhost:4200/` opened in your browser, you'll see it auto-refresh to reveal our new page.  If not, go visit `http://localhost:4200/` now.
 
 Our 'My Blog' header should appear nicely beneath our application header.
 
 **ProTip™** Ember-CLI uses live-reloading to persist changes to the browser without the need of reloading. Neat!
 
-#### Handlebars link-to helper
+#### Putting our posts on the page
 
-It would be useful to provide a link at the root of our application to our blog posts so that when we visit `http://localhost:4200` we can easily jump to our blog-posts. To add this link open up the `app/templates/application.hbs` file and see what is there:
+So far we have only put some HTML on our page. Let's use our API to show our actual blog posts.
 
-    <h2 id="title">Welcome to Ember.js</h2>
+First let's add a `model` to our route. One of the jobs of routes is to provide a model to their template. Our model should be a list of blog posts retrieved from our API.
 
-    {{outlet}}
-
-We're only going to add one small line here to link to our `blog-posts` route and that uses a special handlebars template called `link-to`. Imagine that! Update your `application.hbs` so that it looks like this:
-
-    <h2 id="title">Welcome to Ember.js</h2>
-    {{link-to 'Blog Posts' 'blog-posts'}}
-
-    {{outlet}}
-
-Now take a look at `http://localhost:4200` and a link should appear. **Click it!** And now you're at the blog-posts route. That was easy.
-
-#### Acceptance testing
-With some user interaction added to our application we can now create an acceptance test. So what did we just do? We opened up the root of our application, clicked a link, and it brought us to the `blog-posts` route. Let's make a test for that! Even though there is only one link right now we will add others so we can name this test `app-navigation` and can add to it as we add more links to our `application.hbs`.
-
-    $ ember generate acceptance-test app-navigation
-    installing
-      create tests/acceptance/app-navigation-test.js
-
-Open the newly created file `tests/acceptance/app-navigation-test.js` and see what is there:
+We could manually provide list of blog posts as our model:
 
     import Ember from 'ember';
-    import {
-      module,
-      test
-    } from 'qunit';
-    import startApp from 'workshop/tests/helpers/start-app';
 
-    var application;
-
-    module('Acceptance: AppNavigation', {
-      beforeEach: function() {
-        application = startApp();
-      },
-
-      afterEach: function() {
-        Ember.run(application, 'destroy');
+    export default Ember.Route.extend({
+      model: function() {
+        return [{
+          title: "First post",
+          body: "This is the post body."
+        }];
       }
     });
 
-    test('visiting /app-navigation', function(assert) {
-      visit('/app-navigation');
+Instead let's use the data store to retrieve all of our blog posts:
 
-      andThen(function() {
-        assert.equal(currentPath(), 'app-navigation');
-      });
+    import Ember from 'ember';
+
+    export default Ember.Route.extend({
+      model: function() {
+        return this.store.find('blog-post');
+      }
     });
 
-Hm... this isn't exactly what we want. We don't have an 'app-navigation' route, but the ember generator assumed we did based on the naming. Let's remove that test and add one for our link-to helper instead.
+Now we should update our template to loop over each of our blog posts and render it:
 
-    test('clicking blog posts link visits /blog-posts', function(assert) {
-      visit('/');
+    {{#each model as |post|}}
+    <article>
+      <h2>{{post.title}}</h2>
+      {{post.body}}
+    </article>
+    {{/each}}
 
-      andThen(function() {
-          click('a:contains("Blog Posts")');
-      });
+The handlebars each helper allows us to enumerate over a list of items.  This should print out all of our blog posts to the page.  Let's check out our homepage in our browser again and make sure it worked.
 
-      andThen(function() {
-        assert.equal(currentPath(), 'blog-posts.index');
-      });
-    });
+TODO: explain what it looks like when it worked and add a screenshot
 
-There are a few helpers here that we will use **a lot** when writing acceptance tests.
+#### Acceptance testing
 
-* `visit(route)`: Visits the given route
-* `click(selector or element)`: Clicks the element and triggers any actions triggered by that element's click event
-* `andThen(callback)`: Waits for any preceding promises to continue
+With some user interaction added to our application we can now create an acceptance test.
 
-Since `visit` and `click` are both asynchronous helpers we need to wrap subsequent logic in `andThen` to make sure actions complete before continuing onto the next step.
+Let's test that the blog posts from our API show up on the homepage.
 
-Instead of testing from the command line like before, let's try it out from the browser this time. Visit `http://localhost:4200/tests` in your browser and watch them work! You should feel pretty good about the testing in your app right now.
+TODO: Add acceptance test for our blog post models showing up
 
 
 ### 11 Diversion: API and serializers
