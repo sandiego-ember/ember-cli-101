@@ -56,23 +56,23 @@ Now that you have an Ember-CLI generated project, let's step inside and start ex
     README.md               bower_components        package.json            tests
     app                     config                  public                  vendor
 
-##### 1. package.json and node_modules
+##### package.json and node_modules
 The first things to notice is the file `package.json` and the directory `node_modules`. These are from npm, and if you're new to NPM, take a look at what is in the `package.json` file.  This file contains information about packaging up your application as a module itself, but more importantly for our purposes it contains information about what npm modules are required to run and develop our app. When using ember-cli you won't often come in here and edit this ourselves directly however you'll see that the packages needed for broccoli and ember-cli are specified here. If you were to install any ember-cli-addons yourself, you would see them show up in here as well. The packages specified in `package.json` will be installed under `node_modules/`.
 
-##### 2. bower.json and bower_components
+##### bower.json and bower_components
 The next thing to look at is the file `bower.json` and the `bower_components` directory. This coupling is similar to that of the prior. Bower has become the defacto standard in package management for front end applications and our Ember-CLI application will use it to manage our dependencies. If you open up that file you'll see that our application comes out of the box with not only Ember itself but jQuery, Ember Data (a powerful data persistence library), and qunit (testing framework).
 
-##### 3. tests
+##### tests
 Ember-CLI comes out-of-the box with a testing framework and ember-cli provides some context and helpers, making it easier to test our applications. You can test models, routes, controllers and components. Possibly the most useful types of tests you can write, however, are unit and acceptance tests.
 
 Unit tests allow us to hone in on a specific functionality and does not require the entire ember application be running. This makes it easy to setup and quickly test functional pieces of our application. Acceptance tests, also called integration tests, are used to test workflows of your app. They emulate user interactions throughout your application and using helpers you can assert the expected functionality.
 
-#### 4. public and vendor
+#### public and vendor
 You may be wondering where images, fonts and other assets go. The answer is the `public` directory. These will be served at the root of your application.
 
 Similarly, you may have dependencies that are not in bower - stylesheets or javascripts. These can be stored in the `vendor` directory. Loading vendor files is not something we will cover in this workshop.
 
-##### 5. The 'app' directory
+##### The 'app' directory
 The app directory is where we're going to put all of our application code.  It is carefully structured with an appropriate place for each type of module:
 
     $ ls app
@@ -89,7 +89,7 @@ Some of these may sound familiar to you, while others may be brand new.  Don't w
 
 ### 9. Blog post model
 
-#### 1. Make a blog post model
+#### Make a blog post model
 For our test application, we're going to create a blog.  Let's start off by using a generator to create a model for the blogPost.  We'll give it a couple of basic fields and take a look at what happens.
 
     $ ember generate model blogPost title:string body:string
@@ -119,7 +119,7 @@ Looking a little more into the body of the code, we see that our model is specif
       publishedDate: DS.attr('date')
     });
 
-#### 2. Test our blog post model
+#### Test our blog post model
 Testing can seem daunting if you put it off for too long so lets get right to it and write a test for that model we just created. Ember-CLI has us covered, again, with the generators. We are going to use a generator to create our `blog-post` test.
 
     $ ember generate model-test blog-post
@@ -156,7 +156,7 @@ Since we have about as much as we can test in here already for our small model, 
 
 ### 10. Initial blog posts route
 
-#### 1. Create the route
+#### Create the route
 If we want to actually see our model in our website, we need to actually render something to HTML.  Ember's view layer places routes and their associated URLs front and center in the architecture.  The way to show something is to create a route and associated template.  Let's start once again from a generator:
 
     $ ember generate route blog-posts --type=resource
@@ -188,7 +188,7 @@ We can see that the route to 'blog-posts' is being set up... we'll come back to 
     export default Ember.Route.extend({
     });
 
-#### 2. Update the template
+#### Update the template
 This is where we'll set up any data we need to render the template.  And speaking of the template, let's look at what `app/templates/blog-posts.hbs` contains:
 
     {{outlet}}
@@ -204,7 +204,7 @@ Our 'My Blog' header should appear nicely beneath our application header.
 
 **ProTip™** Ember-CLI uses live-reloading to persist changes to the browser without the need of reloading. Neat!
 
-#### 3. Handlebars link-to helper
+#### Handlebars link-to helper
 
 It would be useful to provide a link at the root of our application to our blog posts so that when we visit `http://localhost:4200` we can easily jump to our blog-posts. To add this link open up the `app/templates/application.hbs` file and see what is there:
 
@@ -221,7 +221,7 @@ We're only going to add one small line here to link to our `blog-posts` route an
 
 Now take a look at `http://localhost:4200` and a link should appear. **Click it!** And now you're at the blog-posts route. That was easy.
 
-#### 4. Acceptance testing
+#### Acceptance testing
 With some user interaction added to our application we can now create an acceptance test. So what did we just do? We opened up the root of our application, clicked a link, and it brought us to the `blog-posts` route. Let's make a test for that! Even though there is only one link right now we will add others so we can name this test `app-navigation` and can add to it as we add more links to our `application.hbs`.
 
     $ ember generate acceptance-test app-navigation
