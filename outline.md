@@ -286,13 +286,30 @@ Instead of testing from the command line like before, let's try it out from the 
 
 Now we're just about ready to start diving in and actually creating blog posts and looking at them - just one thing missing:  A backend to store that data!  Ember is a client side framework and so when we have data that we want to persist, we need a backend API.  Luckily, for this workshop we've set one up for you at https://sandiego-ember-cli-101.herokuapp.com supporting the following endpoints
 
-|Verb|path|Description|
-|---------------------|
-|GET|/blog-posts|List of blog posts|
-|POST|/blog-posts|Create a blog post|
-|GET|/blog-posts/:id|Retrieve a post|
-|PUT|/blog-posts/:id|Update a post|
-|DELETE|/blog-posts/:id|Delete a post|
+<table>
+    <thead>
+        <tr>
+            <th>Verb</th><th>path</th><th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>GET</td><td>/blog-posts</td><td>List of blog posts</td>
+        </tr>
+        <tr>
+            <td>POST</td><td>/blog-posts</td><td>Create a blog post</td>
+        </tr>
+        <tr>
+            <td>GET</td><td>/blog-posts/:id</td><td>Retrieve a post</td>
+        </tr>
+        <tr>
+            <td>PUT</td><td>/blog-posts/:id</td><td>Update a post</td>
+        </tr>
+        <tr>
+            <td>DELETE</td><td>/blog-posts/:id</td><td>Delete a post</td>
+        </tr>
+    </tbody>
+</table>
 
 This particular API was built with Ruby on Rails and thus uses the rails standard snake_case for the JSON that it sends. But Ember expects things to be camelCase, so how can we connect these two nicely?  Luckily, Ember Data already has us covered with the concept of an adapter, which allows us to specify how to adapt the format from any API. We can set up an adapter at the level of an individual model, but since we'll be using the same API for all of our models, let's set one up for the entire application:
 
