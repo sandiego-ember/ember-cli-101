@@ -310,20 +310,17 @@ Let's test that the blog posts from our API show up on the homepage.
 
 TODO: Add acceptance test for our blog post models showing up
 
-### Create New Blog Post
+### 11. Additional Blog post route(s)
 
-Now that we have our `blog-posts` route setup we can add a create route so that we can start actually creating data for our application.
-
-###    Additional Blog post route(s)
-
-0. Add new route with template.  Cover binding, highlight nesting
 0. Add show route with template.
-0. Add index page.
-0. Make blog posts show up on the homepage?
+0. Paginate homepage?
+0. Make archive page for previous blog posts?
 
-### 13. Blog comment
+### 12. Blog comment
+
 0. Make blog comment model and relate to post
 0. Make comments show up on blog post detail page
 
-### 14. Submitting a comment
+### 13. Submitting a comment
+
 0. Add form to submit a comment
