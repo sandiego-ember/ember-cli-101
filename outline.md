@@ -85,7 +85,70 @@ Some of these may sound familiar to you, while others may be brand new.  Don't w
 0. `ember serve`
 0. http://localhost:4200
 
-### 8. Setup ember-data with our API endpoint? Or setup fixtures?
+### 8 Diversion: Accessing our API with ember-data
+
+Ember is a client side framework and so when we have data that we want to persist, we need a backend API.  We want an API to serve up our blog posts and allow users to view and submit comments.
+
+We could use fixtures or a mock API, but some friendly back-end developers have already made a working API for us so let's use that.
+
+Our API is setup at https://sandiego-ember-cli-101.herokuapp.com supporting the following endpoints
+
+<table>
+    <thead>
+        <tr>
+            <th>Verb</th><th>path</th><th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>GET</td><td>/blog-posts</td><td>List of blog posts</td>
+        </tr>
+        <tr>
+            <td>GET</td><td>/blog-posts/:id</td><td>Retrieve a post</td>
+        </tr>
+        <tr>
+            <td>PUT</td><td>/blog-posts/:id</td><td>Update a post</td>
+        </tr>
+        <tr>
+            <td>DELETE</td><td>/blog-posts/:id</td><td>Delete a post</td>
+        </tr>
+    </tbody>
+</table>
+
+Our API uses snake_case in the JSON it sends, common for Ruby on Rails APIs. Ember expects everything to be camelCase, so how can we connect these two nicely? Fortunately, we can use an Ember Data adapter to consumer our API and adapter it to the style we use in Ember.
+
+We can set up an adapter at the level of an individual model, but since we'll be using the same API for all of our models, let's set one up for the entire application:
+
+    $ ember g adapter application
+    version: 0.2.0
+      installing
+        create app/adapters/application.js
+      installing
+        create tests/unit/adapters/application-test.js
+
+Let's open up that adapter and see what is there:
+
+    import DS from 'ember-data';
+
+    export default DS.RESTAdapter.extend({
+    });
+
+We're using an Ember Data builtin adapter called the RESTAdapter. Building a custom adapter isn't too hard, but we don't need to because Ember Data already has an adapter custom built for Rails APIs.
+
+Let's update our file to use the Ember adapter for Rails APIs:
+
+    import DS from 'ember-data';
+
+    export default DS.ActiveModelAdapter.extend({
+    });
+
+Finally, to point our Ember app at the API we've set up, let's restart 'ember serve' using the proxy option to point Ember to the api we want to access:
+
+    $ ember serve --proxy https://sandiego-ember-cli-101.herokuapp.com
+    version: 0.2.1
+    Proxying to https://sandiego-ember-cli-101.herokuapp.com
+    Livereload server on port 35729
+    Serving on http://localhost:4200/
 
 ### 9. Blog post model
 
@@ -246,67 +309,6 @@ With some user interaction added to our application we can now create an accepta
 Let's test that the blog posts from our API show up on the homepage.
 
 TODO: Add acceptance test for our blog post models showing up
-
-
-### 11 Diversion: API and serializers
-
-Now we're just about ready to start diving in and actually creating blog posts and looking at them - just one thing missing:  A backend to store that data!  Ember is a client side framework and so when we have data that we want to persist, we need a backend API.  Luckily, for this workshop we've set one up for you at https://sandiego-ember-cli-101.herokuapp.com supporting the following endpoints
-
-<table>
-    <thead>
-        <tr>
-            <th>Verb</th><th>path</th><th>Description</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>GET</td><td>/blog-posts</td><td>List of blog posts</td>
-        </tr>
-        <tr>
-            <td>POST</td><td>/blog-posts</td><td>Create a blog post</td>
-        </tr>
-        <tr>
-            <td>GET</td><td>/blog-posts/:id</td><td>Retrieve a post</td>
-        </tr>
-        <tr>
-            <td>PUT</td><td>/blog-posts/:id</td><td>Update a post</td>
-        </tr>
-        <tr>
-            <td>DELETE</td><td>/blog-posts/:id</td><td>Delete a post</td>
-        </tr>
-    </tbody>
-</table>
-
-This particular API was built with Ruby on Rails and thus uses the rails standard snake_case for the JSON that it sends. But Ember expects things to be camelCase, so how can we connect these two nicely?  Luckily, Ember Data already has us covered with the concept of an adapter, which allows us to specify how to adapt the format from any API. We can set up an adapter at the level of an individual model, but since we'll be using the same API for all of our models, let's set one up for the entire application:
-
-    $ ember g adapter application
-    version: 0.2.0
-      installing
-        create app/adapters/application.js
-      installing
-        create tests/unit/adapters/application-test.js
-
-Let's open up that adapter and see what is there:
-
-    import DS from 'ember-data';
-
-    export default DS.RESTAdapter.extend({
-    });
-
-Not much going on, we're using an Ember Data builtin adapter called the RESTAdapter. Building a custom adapter isn't too hard, but luckily for us we don't need to... Ember Data already has an adapter custom built for Rails APIs. We just need to update this file to use that special adapter as follows:
-
-    import DS from 'ember-data';
-
-    export default DS.ActiveModelAdapter.extend({
-    });
-
-Finally, to point our ember app at the API we've set up, we simply restart our 'ember serve' using the proxy option to point Ember to the api we want to access:
-
-    $ ember serve --proxy https://sandiego-ember-cli-101.herokuapp.com
-    version: 0.2.1
-    Proxying to https://sandiego-ember-cli-101.herokuapp.com
-    Livereload server on port 35729
-    Serving on http://localhost:4200/
 
 ### Create New Blog Post
 
