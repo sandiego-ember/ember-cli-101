@@ -312,9 +312,64 @@ TODO: Add acceptance test for our blog post models showing up
 
 ### 11. Additional Blog post route(s)
 
-0. Add show route with template.
-0. Paginate homepage?
-0. Make archive page for previous blog posts?
+What if we want to share a link to one of our blog posts?  To do that, we would need a page for each blog post.  Let's make those!
+
+#### Create the route
+
+Let's start by using a generator to make the new files we'll need:
+
+    $ ember generate route blogPost --type=resource --path=/post/:blog_post_id
+    version: 0.2.1
+    installing
+      create app/routes/blog-post.js
+        create app/templates/blog-post.hbs
+        installing
+          create tests/unit/routes/blog-post-test.js
+
+This creates a few files, and also adds a  `app/router.js`:
+
+    import Ember from 'ember';
+    import config from './config/environment';
+
+    var Router = Ember.Router.extend({
+      location: config.locationType
+    });
+
+    Router.map(function() {
+      this.resource('blogPost', {
+        path: '/post/:blog_post_id'
+      }, function() {});
+    });
+
+    export default Router;
+
+TODO: Should we add a store lookup to our route.js file even though it's done automagically?
+
+#### Update the template
+
+Now let's add the following to our `app/blog-post.hbs` template file to display our post on the page:
+
+    <article>
+      <h2>{{model.title}}</h2>
+      {{model.body}}
+    </article>
+
+If we visit `http://localhost:4200/post/1` in our browser, we should see an example blog post.
+
+#### Handlebars link-to helper
+
+Now that we have unique URLs for each blog post, we need to link to these URLs.
+
+To add these links open up the `app/templates/index.hbs` file and add a `{{link-to}}` helper:
+
+    {{#each model as |post|}}
+    <article>
+      <h2>{{#link-to 'blogPost' post}}{{post.title}}{{/link-to}}</h2>
+      {{post.body}}
+    </article>
+    {{/each}}
+
+Now take a look at `http://localhost:4200` and a link should appear. **Click it!** And now you're at the page for our blog post.
 
 ### 12. Blog comment
 
@@ -324,3 +379,8 @@ TODO: Add acceptance test for our blog post models showing up
 ### 13. Submitting a comment
 
 0. Add form to submit a comment
+
+### More?
+
+0. Paginate homepage?
+0. Make archive page for previous blog posts?
