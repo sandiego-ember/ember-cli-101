@@ -262,7 +262,7 @@ Our 'My Blog' header should appear nicely beneath our application header.
 
 #### Putting our posts on the page
 
-So far we have only put some HTML on our page. Let's use our API to show our actual blog posts.
+So far we have only put some HTML on our page. Let's use the API to show our actual blog posts.
 
 First let's add a `model` to our route. One of the jobs of routes is to provide a model to their template. Our model should be a list of blog posts retrieved from our API.
 
@@ -292,23 +292,15 @@ Instead let's use the data store to retrieve all of our blog posts:
 Now we should update our template to loop over each of our blog posts and render it:
 
     {{#each model as |post|}}
-    <article>
-      <h2>{{post.title}}</h2>
-      {{post.body}}
-    </article>
+      <article>
+        <h2>{{post.title}}</h2>
+        {{post.body}}
+      </article>
     {{/each}}
 
 The handlebars each helper allows us to enumerate over a list of items.  This should print out all of our blog posts to the page.  Let's check out our homepage in our browser again and make sure it worked.
 
-TODO: explain what it looks like when it worked and add a screenshot
-
-#### Acceptance testing
-
-With some user interaction added to our application we can now create an acceptance test.
-
-Let's test that the blog posts from our API show up on the homepage.
-
-TODO: Add acceptance test for our blog post models showing up
+![display all blog posts](https://s3.amazonaws.com/f.cl.ly/items/0e0w0u2b2o3d0r47301y/Screen%20Shot%202015-03-31%20at%201.45.32%20PM.png)
 
 ### 11. Additional Blog post route(s)
 
@@ -326,7 +318,7 @@ Let's start by using a generator to make the new files we'll need:
         installing
           create tests/unit/routes/blog-post-test.js
 
-This creates a few files, and also adds a  `app/router.js`:
+This creates a few files, and also adds some stuff to your  `app/router.js`:
 
     import Ember from 'ember';
     import config from './config/environment';
@@ -343,33 +335,163 @@ This creates a few files, and also adds a  `app/router.js`:
 
     export default Router;
 
-TODO: Should we add a store lookup to our route.js file even though it's done automagically?
+Here it has defined a resource for us with a dynamic segmant in the route, `:blog_post_id`. This dynamic segment will be extracted from the URL and passed into the `model` hook on the `post` route. We can then use this parameter to look up that exact `blog post` in the store. So let's open up `routes/blog-post.js` that was generated for us and do just that.
+
+    import Ember from 'ember';
+
+    export default Ember.Route.extend({
+      model: function(params) {
+        return this.store.find('blog-post', params.blog_post_id);
+      }
+    });
+
 
 #### Update the template
 
-Now let's add the following to our `app/blog-post.hbs` template file to display our post on the page:
+In order to make sure this is working, let's add some markup to `app/blog-post.hbs` that will display a post:
 
     <article>
       <h2>{{model.title}}</h2>
       {{model.body}}
     </article>
 
-If we visit `http://localhost:4200/post/1` in our browser, we should see an example blog post.
+Since we happen to know there is a blog post with `id: 1` on our API server, we can manually visit `http://localhost:4200/post/1` in our browser to test with an example blog post.
+
+#### The magic of Ember-Data
+
+Ember-Data's REST Adapter comes with some freebies so we can do less work. The adapter that we are using, `ActiveModelAdapter` is an extension of the REST Adapter, so we get to take advantage of this automagic as well if our application follows URL conventiones expected of the REST Adapter.
+
+Based on the URL the REST Adapter will make the proper action calls to the application's API for the model hook.
+
+<table>
+  <thead>
+    <tr>
+      <td>Action</td>
+      <td>HTTP Verb</td>
+      <td>URL</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Find</td>
+      <td>GET</td>
+      <td>/post/:blog_post_id</td>
+    </tr>
+    <tr>
+      <td>Find All</td>
+      <td>GET</td>
+      <td>/post</td>
+    </tr>
+    <tr>
+      <td>Update</td>
+      <td>PUT</td>
+      <td>/post/:blog_post_id</td>
+    </tr>
+    <tr>
+      <td>Create</td>
+      <td>POST</td>
+      <td>/post</td>
+    </tr>
+    <tr>
+	  <td>Delete</td>
+	  <td>DELETE</td>
+	  <td>/post/:blog_post_id</td>
+    </tr>
+  </tbody>
+</table>
+
+The store action determines the model name based on the defined dynamic segment. In our example `:blog_post_id` contains the proper snake-case name for our model with suffix `_id` appended.
+
+To confirm that this works, **delete the `routes/blog-post.js` file** and verify in your browser (http://localhost:4200/post/1) after the page reloads that you are still able to view the example blog post.
 
 #### Handlebars link-to helper
 
-Now that we have unique URLs for each blog post, we need to link to these URLs.
+Now that we have unique URLs for each blog post, we can link to these URLs from our index route.
 
 To add these links open up the `app/templates/index.hbs` file and add a `{{link-to}}` helper:
 
     {{#each model as |post|}}
-    <article>
-      <h2>{{#link-to 'blogPost' post}}{{post.title}}{{/link-to}}</h2>
-      {{post.body}}
-    </article>
+      <article>
+        <h2>{{#link-to 'blogPost' post}}{{post.title}}{{/link-to}}</h2>
+        {{post.body}}
+      </article>
     {{/each}}
 
 Now take a look at `http://localhost:4200` and a link should appear. **Click it!** And now you're at the page for our blog post.
+
+#### Acceptance testing
+
+With some user interaction added to our application we can now create an acceptance test. The user flow for this test will be:
+
+0. Visit `/`
+0. Click the first blog link
+0. Verify that the URL now matches `/post/:blog_post_id`
+
+First we will have to generate our acceptance test.
+
+    $ ember generate acceptance-test blog-post-show
+    installing
+      create tests/acceptance/blog-post-show-test.js
+
+Open the created file `tests/acceptance/blog-post-show-test.js` and see what is there:
+
+    import Ember from 'ember';
+    import {
+      module,
+      test
+    } from 'qunit';
+    import startApp from 'workshop/tests/helpers/start-app';
+
+    var application;
+
+    module('Acceptance: BlogPostShow', {
+      beforeEach: function() {
+        application = startApp();
+      },
+
+      afterEach: function() {
+        Ember.run(application, 'destroy');
+      }
+    });
+
+    test('visiting /blog-post-show', function(assert) {
+      visit('/blog-post-show');
+
+      andThen(function() {
+        assert.equal(currentPath(), 'blog-post-show');
+      });
+    });
+
+Let's first rename this test to something more applicable and remove the stuff inside.
+
+    test('visit blog post from index', function(assert) {
+
+    });
+    
+There are a few helpers here that we will use **a lot** when writing acceptance tests.
+
+* `visit(route)`: Visits the given route
+* `click(selector or element)`: Clicks the element and triggers any actions triggered by that element's click event
+* `andThen(callback)`: Waits for any preceding promises to continue
+
+Since `visit` and `click` are both asynchronous helpers we need to wrap subsequent logic in `andThen` to make sure actions complete before continuing onto the next step.
+
+Now we will code out the steps listed above to test that we can link to a blog post from index.
+
+    test('visit blog post from index', function(assert) {
+      visit('/');
+      var blogSelector = 'article:first-of-type a';
+
+      andThen(function() {
+        click(blogSelector);
+      });
+      
+      andThen(function() {
+        assert.equal(currentURL(), '/post/1');
+      });
+    });
+
+Verify the tests are passing by visiting `http://localhost:4200/tests` in the browser.
 
 ### 12. Blog comment
 

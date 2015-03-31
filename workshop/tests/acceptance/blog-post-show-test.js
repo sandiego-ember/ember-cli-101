@@ -7,7 +7,7 @@ import startApp from 'workshop/tests/helpers/start-app';
 
 var application;
 
-module('Acceptance: AppNavigation', {
+module('Acceptance: BlogPostShow', {
   beforeEach: function() {
     application = startApp();
   },
@@ -17,11 +17,15 @@ module('Acceptance: AppNavigation', {
   }
 });
 
-test('clicking blog posts link visits /blog-posts', function(assert) {
+test('visit blog post from index', function(assert) {
   visit('/');
-  click('a:contains("Blog Posts")');
+  var blogSelector = 'article:first-of-type a';
 
   andThen(function() {
-    assert.equal(currentPath(), 'blog-posts.index');
+    click(blogSelector);
+  });
+
+  andThen(function() {
+    assert.equal(currentURL(), '/post/1');
   });
 });

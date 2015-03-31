@@ -1,0 +1,6 @@
+{{#each model as |post|}}
+  <article>
+    <h2>{{#link-to 'blogPost' post}}{{post.title}}{{/link-to}}</h2>
+    {{post.body}}
+  </article>
+{{/each}}
