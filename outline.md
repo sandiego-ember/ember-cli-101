@@ -163,12 +163,24 @@ Our API is setup at https://sandiego-ember-cli-101.herokuapp.com supporting the 
         <tr>
             <td>DELETE</td><td>/blog-posts/:id</td><td>Delete a post</td>
         </tr>
+        <tr>
+            <td>GET</td><td>/comments</td><td>List of blog comments</td>
+        </tr>
+        <tr>
+            <td>GET</td><td>/comments/:id</td><td>Retrieve a comment</td>
+        </tr>
+        <tr>
+            <td>PUT</td><td>/comments/:id</td><td>Update a comment</td>
+        </tr>
+        <tr>
+            <td>DELETE</td><td>/comments/:id</td><td>Delete a comment</td>
+        </tr>
     </tbody>
 </table>
 
-Our API uses `snake_case` in the JSON it sends, common for Ruby on Rails APIs. Ember expects everything to be `camelCase`, so how can we connect these two nicely? Fortunately, we can use an Ember Data adapter to consumer our API and adapter it to the style we use in Ember.
+Our API uses `snake_case` in the JSON it sends, the convention for Ruby on Rails APIs. Ember expects everything to be `camelCase`, so how can we connect these two nicely? Fortunately, we can use an Ember Data adapter to consumer our API and adapt it to the style we use in Ember.
 
-We can set up an adapter at the level of an individual model, but since we'll be using the same API for all of our models, let's set one up for the entire application:
+We can set up an adapter at the level of an individual model, but since we'll be using the same API for all our models, let's set one up for the entire application:
 
 ```console
 $ ember g adapter application
