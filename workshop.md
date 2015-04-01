@@ -644,9 +644,9 @@ test('visit blog post from index', function(assert) {
 
 Verify the tests are passing by visiting `http://localhost:4200/tests` in the browser.
 
-### Blog comments
+## Blog comments
 
-#### Make a comment model
+### Make a comment model
 We want users to be able to comment on blog posts. We've seen how to use `ember generate model` before to create our models. In this case, we want the comment to be a `string`, and our Rails API defines the content of these comments as `content`.
 
 ```console
@@ -718,7 +718,7 @@ export default DS.Model.extend({
 
 This tells Ember Data to do exactly what we said above: fetch the comments for these posts by hitting `GET /comments/:id` for every comment on our post. This happens asynchronously, meaning that while the blog post content has loaded, the comments may take a moment to load.
 
-#### Show comments on a blog post
+### Show comments on a blog post
 
 Let's get comments to show up on a blog post by adding to our `app/templates/blog-post.js`:
 
