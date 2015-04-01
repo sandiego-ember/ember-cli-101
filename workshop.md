@@ -1,8 +1,23 @@
-# Outline
+# Ember-CLI 101 Workshop
+
+Welcome to Ember-CLI 101 workshop hosted by [San Diego Ember][] with help from our friends at [Ember-SC][].
 
 This workshop is loosely guided by [Adolfo Builes'][abuiles] book Ember-CLI 101.  You can [get $10 off for San Diego Ember group][ember-cli 101 book].
 
-### 2. Goal: reduce the glue
+### Pre-event setup instructions
+
+0. [Install Git][git-scm]
+0. [Install Node.js][node-install]
+0. Setup NPM for non-sudo installation
+    0. NPM is the node package manager.  It will automatically be installed when you install node.
+    0. NPM installs packages *locally* (within the directory it is invoked in) for per-project modules, or *globally* for packages you want accessible everywhere.
+    0. However, by default NPM installs global packages in a root-restricted location, requiring SUDO to install.  This creates a **huge** headache.  As an alternative, _before_ you install any packages, follow [this guide][npm-g-without-sudo] to configure your NPM to install in your home directory without requiring sudo.
+0. Install Bower: `npm i -g bower`
+0. Install Ember-CLI: `npm i -g ember-cli`
+0. And create a new project named 'workshop': `ember new workshop`
+
+### Goal: reduce the glue
+
 Web application development can involve a lot of repetition.  Attempts to reduce the repetition involved in web development has given rise to a variety of scaffolding tools and best practices.  These scaffolding tools are all trying to do the same thing:  reduce the amount of work necessary to "get started" by providing a set of "best practices" that are enabled default.  These choices include things like:
 
 0. Application directory structure
@@ -12,7 +27,8 @@ Web application development can involve a lot of repetition.  Attempts to reduce
 0. Asset compilation & minification
 0. Testing framework and setup
 
-### 3. Ember-CLI
+### Ember-CLI
+
 Ember-CLI provides choices for all of the aforementioned areas.  We'll dive into some of these choices in more detail later but at a high level Ember-CLI builds in:
 
 0. A directory structure which we'll explore more later
@@ -23,9 +39,13 @@ Ember-CLI provides choices for all of the aforementioned areas.  We'll dive into
 0. QUnit for testing
 
 #### Modules
-Modules allow you to divide logical portions of code into smaller, functional pieces and include them as needed. As your application grows, smaller pieces of functional code become easier to manage, support, maintain and test. **TODO: more stuff**
 
-### 4. Best practices
+Modules allow you to divide logical portions of code into smaller, functional pieces and include them as needed. As your application grows, smaller pieces of functional code become easier to manage, support, maintain and test.
+
+**TODO: more stuff**
+
+### Best practices
+
 0. Code
     0. `camelCase` naming
     0. use modules, avoid globals
@@ -33,17 +53,6 @@ Modules allow you to divide logical portions of code into smaller, functional pi
 0. Files
     0. `kebab-case-naming.js`
     0. children in subdirectory → `routes/invoices/edit.js` & `routes/invoices/new.js`
-
-### 5. Setup
-0. [Install Git][git-scm]
-0. [Install Node.js][node-install]
-0. Setup NPM for non-sudo installation
-    0. NPM is the node package manager.  It will automatically be installed when you install node.
-    0. NPM installs packages *locally* (within the directory it is invoked in) for per-project modules, or *globally* for packages you want accessible everywhere.
-    0. However, by default NPM installs global packages in a root-restricted location, requiring SUDO to install.  This creates a **huge** headache.  As an alternative, _before_ you install any packages, follow [this guide][npm-g-without-sudo] to configure your NPM to install in your home directory without requiring sudo.
-0. Install Bower: `npm i -g bower`
-0. Install Ember-CLI: `npm i -g ember-cli`
-0. And create a new project named 'workshop': `ember new workshop`
 
 ### 6. Project Organization: High level
 
@@ -58,22 +67,27 @@ bower.json        config       .ember-cli     .jshintrc   public        tests   
 ```
 
 ##### package.json and node_modules
+
 The first things to notice is the file `package.json` and the directory `node_modules`. These are from NPM, and if you're new to NPM, take a look at what is in the `package.json` file.  This file contains information about what NPM modules are required to run and develop our app. You'll see that the packages needed for broccoli and Ember-CLI are specified here. When using Ember-CLI you won't often edit this directly. If you were to install any Ember-CLI addons yourself, you would see them show up in here as well. The packages specified in `package.json` will be installed in the `node_modules` directory.
 
 ##### bower.json and bower_components
+
 The next thing to look at is the file `bower.json` and the `bower_components` directory. These are similar to `package.json` and `node_modules`. Bower has become the de facto standard for front-end package management and our Ember-CLI application will use it to manage many of our dependencies. If you open up `bower.json` you'll see that our application comes out of the box with not only Ember but jQuery, Ember Data (for data persistence), and QUnit (for testing).
 
 ##### tests
+
 Ember-CLI comes out-of-the box with a testing framework and provides some helpers to make testing easier. You can test models, routes, controllers and components. Possibly the most useful types of tests you can write, however, are unit and acceptance tests.
 
 Unit tests allow us to focus on specific functionality and do not require the entire Ember application be running. Acceptance tests, also called integration tests, are used to test the flow of your app. They emulate user interactions throughout your application and using helpers you can make assertions about the expected functionality.
 
 #### public and vendor
+
 You may be wondering where images, fonts and other miscellaneous asset files should go. The answer is the `public` directory. These will be served at the root of your application.
 
 Similarly, you may have JavaScript or CSS dependencies that are not in bower. These can be stored in the `vendor` directory. Loading vendor files is not something we will cover in this workshop.
 
 ##### The 'app' directory
+
 The app directory is where we're going to put all of our own code.  It is carefully structured with an appropriate place for each type of module:
 
 ```console
@@ -84,11 +98,12 @@ components      helpers         models          routes          templates
 
 Some of these may sound familiar to you, while others may be brand new.  Don't worry yet if you don't know what all of these different pieces are.  We'll get to them one by one.
 
-### 7. Ready to code!
+### Ready to code!
+
 0. `ember serve`
 0. http://localhost:4200
 
-### 8. Install Bootstrap
+### Install Bootstrap
 
 Let's use Bootstrap to make our website look nice.  This step isn't strictly necessary but it'll make our application snazzier.
 
@@ -136,7 +151,7 @@ Now let's add a big header introducing our blog.  Let's update our `application.
 
 Our site should have refreshed in our web browser now, revealing a big header for our blog.
 
-### 8 Diversion: Accessing our API with ember-data
+### Diversion: Accessing our API with ember-data
 
 Ember is a client side framework and so when we have data that we want to persist, we need a back-end API.  We want an API to serve up our blog posts and allow users to view and submit comments.
 
@@ -221,9 +236,10 @@ Livereload server on port 35729
 Serving on http://localhost:4200/
 ```
 
-### 9. Blog post model
+### Blog post model
 
 #### Make a blog post model
+
 For our test application, we're going to create a blog.  Let's start off by using a generator to create a model for the blogPost.  We'll give it a couple of basic fields and take a look at what happens.
 
 ```console
@@ -299,7 +315,7 @@ Since we have about as much as we can test in here already for our small model, 
 
 **ProTip™** If you ever need to know what generators are available, just type `ember help generate` and enjoy a deliciously long list of generating goodness.
 
-### 10. Adding blog posts to our homepage
+### Adding blog posts to our homepage
 
 #### Create the route
 
@@ -399,7 +415,7 @@ The handlebars each helper allows us to enumerate over a list of items.  This sh
 
 ![display all blog posts](https://s3.amazonaws.com/f.cl.ly/items/0e0w0u2b2o3d0r47301y/Screen%20Shot%202015-03-31%20at%201.45.32%20PM.png)
 
-### 11. Additional Blog post route(s)
+### Additional Blog post route(s)
 
 What if we want to share a link to one of our blog posts?  To do that, we would need a page for each blog post.  Let's make those!
 
@@ -608,22 +624,27 @@ test('visit blog post from index', function(assert) {
 
 Verify the tests are passing by visiting `http://localhost:4200/tests` in the browser.
 
-### 12. Blog comment
+### Blog comment
 
-0. Make blog comment model and relate to post
-0. Make comments show up on blog post detail page
+**TODO** Make blog comment model and relate to post
+**TODO** Make comments show up on blog post detail page
 
-### 13. Submitting a comment
+### Submitting a comment
 
-0. Add form to submit a comment
+**TODO** Add form to submit a comment
 
 ### More?
 
+**TODO**
+
 0. Paginate homepage?
 0. Make archive page for previous blog posts?
+0. Use gravatar for comments
 
 [ember-cli 101 book]: https://leanpub.com/ember-cli-101/c/san-diego-101
 [git-scm]: http://git-scm.com/downloads
 [npm-g-without-sudo]: https://github.com/sindresorhus/guides/blob/master/npm-global-without-sudo.md
 [node-install]: https://nodejs.org/download/
 [abuiles]: http://blog.abuiles.com/
+[san diego ember]: http://www.meetup.com/sandiego-ember/
+[ember-sc]: http://www.meetup.com/ember-sc
