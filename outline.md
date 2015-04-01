@@ -166,7 +166,7 @@ Our API is setup at https://sandiego-ember-cli-101.herokuapp.com supporting the 
     </tbody>
 </table>
 
-Our API uses snake_case in the JSON it sends, common for Ruby on Rails APIs. Ember expects everything to be camelCase, so how can we connect these two nicely? Fortunately, we can use an Ember Data adapter to consumer our API and adapter it to the style we use in Ember.
+Our API uses `snake_case` in the JSON it sends, common for Ruby on Rails APIs. Ember expects everything to be `camelCase`, so how can we connect these two nicely? Fortunately, we can use an Ember Data adapter to consumer our API and adapter it to the style we use in Ember.
 
 We can set up an adapter at the level of an individual model, but since we'll be using the same API for all of our models, let's set one up for the entire application:
 
@@ -222,7 +222,7 @@ installing
     create tests/unit/models/blog-post-test.js
 ```
 
-OK, Ember-CLI has just created for us both a model file in app/models and a test in tests/unit/models/.  Let's take a look at the model and see what it contains:
+OK, Ember-CLI has just created for us both a model file in `app/models` and a test file in `tests/unit/models`.  Let's take a look at the model and see what it contains:
 
 ```js
 import DS from 'ember-data';
@@ -233,9 +233,11 @@ export default DS.Model.extend({
  });
  ```
 
-What is that funky syntax?  `import DS from 'ember-data'` and `export default DSModel.extend()`?  Welcome to ES6 modules.  The ECMAScript 6 standard specifies this as the standard way to define modules, and thanks to the magic of transpilers we can already use them today even though no browsers actually support ES6.  If you're familiar with node or AMD modules, it should be pretty easy to figure out what's going on here, there's just slightly different syntax.  We're importing a module from 'ember-data' and calling it DS.  Then we're extending the DS.Model class and returning that as the module this class defines.
+What is that funky syntax?  `import DS from 'ember-data'` and `export default DSModel.extend()`?  Welcome to the world of tomorrow!
 
-Looking a little more into the body of the code, we see that our model is specifying exactly what fields it intends to have, in this case a title and a string.  If we later decide we want another field (perhaps a published date) we need only extend this model that the generator created for us.
+Those `import` and `export` statements use ECMAScript 6 module syntax. Thanks to the magic of transpilers, we can already use them today even though no browsers support ES6 yet.  This should look familiar if you have used Node.js or AMD modules, there's just slightly different syntax.  We're importing a module from 'ember-data' and calling it `DS`.  Then we're extending the `DS.Model` class and using that as our module export.
+
+Our model specifies every field it should have, in this case `title` and `body`.  If we later decide we want another field (perhaps a published date) we just need to add it to our model:
 
 ```js
 import DS from 'ember-data';
@@ -248,7 +250,7 @@ export default DS.Model.extend({
 ```
 
 #### Test our blog post model
-Testing can seem daunting if you put it off for too long so lets get right to it and write a test for that model we just created. Ember-CLI has us covered. Our model generation above also generated a test module for our blog post model:
+Testing can seem daunting if you put it off for too long so lets get right to it and write a test for that model we just created. Ember-CLI has us covered. When we generated our blog post model Ember-CLI also generated a test module for our model:
 
 ```console
 $ ls tests/unit/models
@@ -275,11 +277,11 @@ test('it exists', function(assert) {
 });
 ```
 
-That looks like a lot! First is the import statement. This is how, using ES6 module syntax, we can import the parts of the `ember-qunit` package we need for our test.
+That looks like a lot! First is the `import` statement. This imports the `ember-qunit` package we need for writing our test.
 
-The first section you see, `moduleForModel`, is where any necessary loading for the model testing will be done. Each test is contained to itself, so if a certain model has a dependency on another model through a relationship, for example, we would need to define it here. This is not the case for our application so ours can stay empty.
+The first section you see, `moduleForModel`, is where any necessary loading for the model testing will be done. Each test is self-contained, so any dependencies (for example if one model depends on another) must be defined here. We don't need to worry about this for our simple blog post model.
 
-The following section you see, `test` is how we define a single test. One test can have many assertions but should test only one thing. The generator created a default test for us that asserts the model exists.
+The next section, `test`, shows how we define an individual test. One test can have many assertions but should test only one thing. The generator created a default test which asserts that our model exists.
 
 Since we have about as much as we can test in here already for our small model, let's make sure the tests pass by running `ember test`.
 
