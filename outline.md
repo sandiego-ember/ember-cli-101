@@ -160,7 +160,7 @@ Our API uses snake_case in the JSON it sends, common for Ruby on Rails APIs. Emb
 We can set up an adapter at the level of an individual model, but since we'll be using the same API for all of our models, let's set one up for the entire application:
 
     $ ember g adapter application
-    version: 0.2.0
+    version: 0.2.2
       installing
         create app/adapters/application.js
       installing
@@ -185,7 +185,7 @@ Let's update our file to use the Ember adapter for Rails APIs:
 Finally, to point our Ember app at the API we've set up, let's restart 'ember serve' using the proxy option to point Ember to the api we want to access:
 
     $ ember serve --proxy https://sandiego-ember-cli-101.herokuapp.com
-    version: 0.2.1
+    version: 0.2.2
     Proxying to https://sandiego-ember-cli-101.herokuapp.com
     Livereload server on port 35729
     Serving on http://localhost:4200/
@@ -351,7 +351,7 @@ What if we want to share a link to one of our blog posts?  To do that, we would 
 Let's start by using a generator to make the new files we'll need:
 
     $ ember generate route blogPost --type=resource --path=/post/:blog_post_id
-    version: 0.2.1
+    version: 0.2.2
     installing
       create app/routes/blog-post.js
         create app/templates/blog-post.hbs
