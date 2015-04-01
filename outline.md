@@ -1,7 +1,6 @@
 # Outline
 
-### 1. Loosely guided by @abuiles book Ember-CLI 101
- You can get $10 off for San Diego Ember group: https://leanpub.com/ember-cli-101/c/san-diego-101
+This workshop is loosely guided by @abuiles book Ember-CLI 101.  You can [get $10 off for San Diego Ember group][ember-cli 101 book].
 
 ### 2. Goal: reduce the glue
 There are all sorts of details that go into creating a web application that are repeated over and over again.  Attempting to reduce the work associated with this has given rise to a variety of scaffolding tools and guidelines on best choices.  These scaffolding tools are all trying to do the same thing:  reduce the amount of work necessary to "get started" by providing a set of "best practice" choices that serve right out of the box.  These choices include things like:
@@ -609,6 +608,7 @@ Verify the tests are passing by visiting `http://localhost:4200/tests` in the br
 0. Paginate homepage?
 0. Make archive page for previous blog posts?
 
+[ember-cli 101 book]: https://leanpub.com/ember-cli-101/c/san-diego-101
 [git-scm]: http://git-scm.com/downloads
 [npm-g-without-sudo]: https://github.com/sindresorhus/guides/blob/master/npm-global-without-sudo.md
 [node-install]: https://nodejs.org/download/
