@@ -3,4 +3,11 @@
     <h1>{{model.title}}</h1>
   </header>
   <p>{{model.body}}</p>
+
+  <h2>Comments</h2>
+  <ul>
+  {{#each model.comments as |comment|}}
+    <li>{{comment.content}}</li>
+  {{/each}}
+  </ul>
 </article>
