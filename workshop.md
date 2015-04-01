@@ -624,7 +624,7 @@ test('visit blog post from index', function(assert) {
 
 Verify the tests are passing by visiting `http://localhost:4200/tests` in the browser.
 
-### 12. Blog comments
+### Blog comments
 
 #### Make a comment model
 We want users to be able to comment on blog posts. We've seen how to use `ember generate model` before to create our models. In this case, we want the comment to be a `string`, and our Rails API defines the content of these comments as `content`.
@@ -722,6 +722,7 @@ We first loop through all the `model.comments` with Ember's (relatively new) syn
 
 ## Blog comment
 
+**TODO** Add acceptance test for comments
 **TODO** Add empty case for comments
 **TODO** Add loading case for comments
 
