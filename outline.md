@@ -3,7 +3,7 @@
 This workshop is loosely guided by [Adolfo Builes'][abuiles] book Ember-CLI 101.  You can [get $10 off for San Diego Ember group][ember-cli 101 book].
 
 ### 2. Goal: reduce the glue
-There are all sorts of details that go into creating a web application that are repeated over and over again.  Attempting to reduce the work associated with this has given rise to a variety of scaffolding tools and guidelines on best choices.  These scaffolding tools are all trying to do the same thing:  reduce the amount of work necessary to "get started" by providing a set of "best practice" choices that serve right out of the box.  These choices include things like:
+Web application development can involve a lot of repetition.  Attempts to reduce the repetition involved in web development has given rise to a variety of scaffolding tools and best practices.  These scaffolding tools are all trying to do the same thing:  reduce the amount of work necessary to "get started" by providing a set of "best practices" that are enabled default.  These choices include things like:
 
 0. Application directory structure
 0. Generators for common components
