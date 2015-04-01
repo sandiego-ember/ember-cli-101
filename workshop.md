@@ -671,7 +671,7 @@ Ember has a number of different ways to define relationships like this. You can 
 
 But, this isn't going to work as we have it! Remember how our API endpoints were `GET /blog_posts/:id` and `GET /comments/:id`? Our API response returns something like this:
 
-```josn
+```json
 {
 	"blog_post": {
 		"id":2,
@@ -717,6 +717,10 @@ Let's get comments to show up on a blog post by adding to our `app/templates/blo
 ```
 
 We first loop through all the `model.comments` with Ember's (relatively new) syntax, defining `|comment|` as the local variable we use to access each `comment` model. Inside of this loop, we output the comment content we defined in our model with `content: DS.attr('string')` with `{{comment.content}}`.
+
+But we also want a good user experience for our readers. They need to know when comments are being loaded and when there aren't any comments at all!
+
+For the loading case, we can hook into 
 
 ## Blog comment
 
