@@ -608,9 +608,32 @@ test('visit blog post from index', function(assert) {
 
 Verify the tests are passing by visiting `http://localhost:4200/tests` in the browser.
 
-### 12. Blog comment
+### 12. Blog comments
 
-0. Make blog comment model and relate to post
+#### Make a comment model
+We want users to be able to comment on blog posts. We've seen how to use `ember generate model` before to create our models. In this case, we want the comment to be a `string`, and our Rails API defines the content of these comments as `content`.
+
+```console
+$ ember generate model comment content:string
+installing
+    create app/models/comment.js
+installing
+    create tests/unit/models/comment-test.js
+```
+
+We've seen this before.  Let's take a look at the model and see what it contains:
+
+```js
+import DS from 'ember-data';
+
+export default DS.Model.extend({
+  content: DS.attr('string')
+ });
+```
+
+But our comments need to be aware of our blog posts.
+
+
 0. Make comments show up on blog post detail page
 
 ### 13. Submitting a comment
