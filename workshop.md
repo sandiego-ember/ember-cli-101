@@ -22,7 +22,7 @@ Web application development can involve a lot of repetition.  Attempts to reduce
 
 0. Application directory structure
 0. Generators for common components
-0. Modularity choices (AMD/node modules/etc) **TODO:  How to explain this better?**
+0. Modularity choices (AMD/node modules/etc)
 0. Build system
 0. Asset compilation & minification
 0. Testing framework and setup
@@ -40,9 +40,7 @@ Ember-CLI provides choices for all of the aforementioned areas.  We'll dive into
 
 ### Modules
 
-Modules allow you to divide logical portions of code into smaller, functional pieces and include them as needed. As your application grows, smaller pieces of functional code become easier to manage, support, maintain and test.
-
-**TODO: more stuff**
+Modules allow you to divide logical portions of code into smaller, functional pieces and include them as needed. As your application grows, smaller pieces of functional code become easier to manage, support, maintain and test. To learn more about JS Modules, check out [jsmodules.io](http://jsmodules.io)
 
 ## Best practices
 
@@ -76,11 +74,11 @@ The next thing to look at is the file `bower.json` and the `bower_components` di
 
 #### tests
 
-Ember-CLI comes out-of-the box with a testing framework and provides some helpers to make testing easier. You can test models, routes, controllers and components. Possibly the most useful types of tests you can write, however, are unit and acceptance tests.
+Ember-CLI comes out-of-the box with a testing framework and provides some helpers to make testing easier. You can test models, routes, controllers and components, and you can test user flows.
 
-Unit tests allow us to focus on specific functionality and do not require the entire Ember application be running. Acceptance tests, also called integration tests, are used to test the flow of your app. They emulate user interactions throughout your application and using helpers you can make assertions about the expected functionality.
+Unit tests allow us to focus on specific functionality of a module and do not require the entire Ember application be running. Acceptance tests, also called integration tests, are used to test the flow of your app. They emulate user interactions throughout your application and using helpers you can make assertions about the expected functionality.
 
-### public and vendor
+#### public and vendor
 
 You may be wondering where images, fonts and other miscellaneous asset files should go. The answer is the `public` directory. These will be served at the root of your application.
 
@@ -521,7 +519,7 @@ Based on our route's dynamic URL segments the REST Adapter will make the proper 
   </tbody>
 </table>
 
-The store action determines the model name based on the defined dynamic segment. In our example `:blog_post_id` contains the proper snake-case name for our model with the suffix `_id` appended.
+**ProTip™** The store action determines the model name based on the defined dynamic segment. In our example `:blog_post_id` contains the proper snake-case name for our model with the suffix `_id` appended.
 
 To confirm that this works, **delete the `routes/blog-post.js` file** and verify that our blog post page (http://localhost:4200/post/1) still works properly after reload.
 
