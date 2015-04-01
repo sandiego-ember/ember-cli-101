@@ -18,4 +18,5 @@ workshoptestem.log
 .DS_Store
 
 dist/index.md
+dist/_site/
 node_modules/
