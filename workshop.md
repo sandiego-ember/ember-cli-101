@@ -4,7 +4,7 @@ Welcome to Ember-CLI 101 workshop hosted by [San Diego Ember][] with help from o
 
 This workshop is loosely guided by [Adolfo Builes'][abuiles] book Ember-CLI 101.  You can [get $10 off for San Diego Ember group][ember-cli 101 book].
 
-### Pre-event setup instructions
+## Pre-event setup instructions
 
 0. [Install Git][git-scm]
 0. [Install Node.js][node-install]
@@ -16,7 +16,7 @@ This workshop is loosely guided by [Adolfo Builes'][abuiles] book Ember-CLI 101.
 0. Install Ember-CLI: `npm i -g ember-cli`
 0. And create a new project named 'workshop': `ember new workshop`
 
-### Goal: reduce the glue
+## Goal: reduce the glue
 
 Web application development can involve a lot of repetition.  Attempts to reduce the repetition involved in web development has given rise to a variety of scaffolding tools and best practices.  These scaffolding tools are all trying to do the same thing:  reduce the amount of work necessary to "get started" by providing a set of "best practices" that are enabled default.  These choices include things like:
 
@@ -27,7 +27,7 @@ Web application development can involve a lot of repetition.  Attempts to reduce
 0. Asset compilation & minification
 0. Testing framework and setup
 
-### Ember-CLI
+## Ember-CLI
 
 Ember-CLI provides choices for all of the aforementioned areas.  We'll dive into some of these choices in more detail later but at a high level Ember-CLI builds in:
 
@@ -38,13 +38,13 @@ Ember-CLI provides choices for all of the aforementioned areas.  We'll dive into
 0. Asset minification also via Broccoli.
 0. QUnit for testing
 
-#### Modules
+### Modules
 
 Modules allow you to divide logical portions of code into smaller, functional pieces and include them as needed. As your application grows, smaller pieces of functional code become easier to manage, support, maintain and test.
 
 **TODO: more stuff**
 
-### Best practices
+## Best practices
 
 0. Code
     0. `camelCase` naming
@@ -54,7 +54,7 @@ Modules allow you to divide logical portions of code into smaller, functional pi
     0. `kebab-case-naming.js`
     0. children in subdirectory → `routes/invoices/edit.js` & `routes/invoices/new.js`
 
-### 6. Project Organization: High level
+## 6. Project Organization: High level
 
 Now that you have an Ember-CLI generated project, let's step inside and start exploring:
 
@@ -66,27 +66,27 @@ bower_components  Brocfile.js  .editorconfig  .gitignore  package.json  testem.j
 bower.json        config       .ember-cli     .jshintrc   public        tests        vendor
 ```
 
-##### package.json and node_modules
+#### package.json and node_modules
 
 The first things to notice is the file `package.json` and the directory `node_modules`. These are from NPM, and if you're new to NPM, take a look at what is in the `package.json` file.  This file contains information about what NPM modules are required to run and develop our app. You'll see that the packages needed for broccoli and Ember-CLI are specified here. When using Ember-CLI you won't often edit this directly. If you were to install any Ember-CLI addons yourself, you would see them show up in here as well. The packages specified in `package.json` will be installed in the `node_modules` directory.
 
-##### bower.json and bower_components
+#### bower.json and bower_components
 
 The next thing to look at is the file `bower.json` and the `bower_components` directory. These are similar to `package.json` and `node_modules`. Bower has become the de facto standard for front-end package management and our Ember-CLI application will use it to manage many of our dependencies. If you open up `bower.json` you'll see that our application comes out of the box with not only Ember but jQuery, Ember Data (for data persistence), and QUnit (for testing).
 
-##### tests
+#### tests
 
 Ember-CLI comes out-of-the box with a testing framework and provides some helpers to make testing easier. You can test models, routes, controllers and components. Possibly the most useful types of tests you can write, however, are unit and acceptance tests.
 
 Unit tests allow us to focus on specific functionality and do not require the entire Ember application be running. Acceptance tests, also called integration tests, are used to test the flow of your app. They emulate user interactions throughout your application and using helpers you can make assertions about the expected functionality.
 
-#### public and vendor
+### public and vendor
 
 You may be wondering where images, fonts and other miscellaneous asset files should go. The answer is the `public` directory. These will be served at the root of your application.
 
 Similarly, you may have JavaScript or CSS dependencies that are not in bower. These can be stored in the `vendor` directory. Loading vendor files is not something we will cover in this workshop.
 
-##### The 'app' directory
+#### The 'app' directory
 
 The app directory is where we're going to put all of our own code.  It is carefully structured with an appropriate place for each type of module:
 
@@ -98,12 +98,12 @@ components      helpers         models          routes          templates
 
 Some of these may sound familiar to you, while others may be brand new.  Don't worry yet if you don't know what all of these different pieces are.  We'll get to them one by one.
 
-### Ready to code!
+## Ready to code!
 
 0. `ember serve`
 0. http://localhost:4200
 
-### Install Bootstrap
+## Install Bootstrap
 
 Let's use Bootstrap to make our website look nice.  This step isn't strictly necessary but it'll make our application snazzier.
 
@@ -151,7 +151,7 @@ Now let's add a big header introducing our blog.  Let's update our `application.
 
 Our site should have refreshed in our web browser now, revealing a big header for our blog.
 
-### Diversion: Accessing our API with ember-data
+## Diversion: Accessing our API with ember-data
 
 Ember is a client side framework and so when we have data that we want to persist, we need a back-end API.  We want an API to serve up our blog posts and allow users to view and submit comments.
 
@@ -236,9 +236,9 @@ Livereload server on port 35729
 Serving on http://localhost:4200/
 ```
 
-### Blog post model
+## Blog post model
 
-#### Make a blog post model
+### Make a blog post model
 
 For our test application, we're going to create a blog.  Let's start off by using a generator to create a model for the blogPost.  We'll give it a couple of basic fields and take a look at what happens.
 
@@ -277,7 +277,7 @@ export default DS.Model.extend({
 });
 ```
 
-#### Test our blog post model
+### Test our blog post model
 Testing can seem daunting if you put it off for too long so lets get right to it and write a test for that model we just created. Ember-CLI has us covered. When we generated our blog post model Ember-CLI also generated a test module for our model:
 
 ```console
@@ -315,9 +315,9 @@ Since we have about as much as we can test in here already for our small model, 
 
 **ProTip™** If you ever need to know what generators are available, just type `ember help generate` and enjoy a deliciously long list of generating goodness.
 
-### Adding blog posts to our homepage
+## Adding blog posts to our homepage
 
-#### Create the route
+### Create the route
 
 If we want to see blog posts on our website, we need to render them into our HTML.  Ember's view layer places routes and their associated URLs front and center.  The way to show something is to create a route and associated template.
 
@@ -344,7 +344,7 @@ export default Ember.Route.extend({
 ```
 
 
-#### Update the template
+### Update the template
 
 Let's take a look at the template file that was generated for us in `app/templates/index.hbs`:
 
@@ -365,7 +365,7 @@ Just this funky thing called `{{outlet}}`.  Ember.js uses handlebars for templat
 
 Go look at the website in your browser again. Our 'My Blog Post' header should appear nicely beneath our big site header.
 
-#### Putting our posts on the page
+### Putting our posts on the page
 
 So far we have only put some HTML on our page. Let's use the API to show our actual blog posts.
 
@@ -415,11 +415,11 @@ The handlebars each helper allows us to enumerate over a list of items.  This sh
 
 ![display all blog posts](https://s3.amazonaws.com/f.cl.ly/items/0e0w0u2b2o3d0r47301y/Screen%20Shot%202015-03-31%20at%201.45.32%20PM.png)
 
-### Additional Blog post route(s)
+## Additional Blog post route(s)
 
 What if we want to share a link to one of our blog posts?  To do that, we would need a page for each blog post.  Let's make those!
 
-#### Create the route
+### Create the route
 
 Let's start by using a generator to make the new files we'll need:
 
@@ -463,7 +463,7 @@ export default Ember.Route.extend({
 ```
 
 
-#### Update the template
+### Update the template
 
 In order to make sure this is working, let's add some markup to `app/blog-post.hbs` that will display a post:
 
@@ -478,7 +478,7 @@ In order to make sure this is working, let's add some markup to `app/blog-post.h
 
 Since we happen to know there is a blog post with `id: 1` on our API server, we can manually visit `http://localhost:4200/post/1` in our browser to test with an example blog post.
 
-#### The magic of Ember-Data
+### The magic of Ember-Data
 
 Ember-Data's REST Adapter comes with some freebies to save us time and unnecessary code. The adapter that we are using, `ActiveModelAdapter` is an extension of the REST Adapter, so we get to take advantage of this automagic if our application follows the URL conventions expected of the REST Adapter.
 
@@ -525,7 +525,7 @@ The store action determines the model name based on the defined dynamic segment.
 
 To confirm that this works, **delete the `routes/blog-post.js` file** and verify that our blog post page (http://localhost:4200/post/1) still works properly after reload.
 
-#### Handlebars link-to helper
+### Handlebars link-to helper
 
 Now that we have unique URLs for each blog post, we can link to these URLs from our index route.
 
@@ -542,7 +542,7 @@ To add these links open up the `app/templates/index.hbs` file and add a `{{link-
 
 Now take a look at `http://localhost:4200` and a link should appear. **Click it!** And now you're at the page for our blog post.
 
-#### Acceptance testing
+### Acceptance testing
 
 With some user interaction added to our application we can now create an acceptance test. The user flow for this test will be:
 
@@ -624,16 +624,16 @@ test('visit blog post from index', function(assert) {
 
 Verify the tests are passing by visiting `http://localhost:4200/tests` in the browser.
 
-### Blog comment
+## Blog comment
 
 **TODO** Make blog comment model and relate to post
 **TODO** Make comments show up on blog post detail page
 
-### Submitting a comment
+## Submitting a comment
 
 **TODO** Add form to submit a comment
 
-### More?
+## More?
 
 **TODO**
 
