@@ -693,15 +693,15 @@ Ember has a number of different ways to define relationships like this. You can 
 
 But, this isn't going to work as we have it! Remember how our API endpoints were `GET /blog_posts/:id` and `GET /comments/:id`? Our API response returns something like this:
 
-```josn
+```json
 {
-	"blog_post": {
-		"id":2,
-		"title": "Hello, World",
-		"body": "Some body!",
-		"published_date" :null,
-		"comment_ids": [1]
-	}
+    "blog_post": {
+        "id":2,
+        "title": "Hello, World",
+        "body": "Some body!",
+        "published_date" :null,
+        "comment_ids": [1]
+    }
 }
 ```
 
@@ -722,7 +722,8 @@ This tells Ember Data to do exactly what we said above: fetch the comments for t
 
 Let's get comments to show up on a blog post by adding to our `app/templates/blog-post.js`:
 
-```
+```handlebars
+{% raw %}
 <article>
   <header class="page-header">
     <h1>{{model.title}}</h1>
@@ -736,6 +737,7 @@ Let's get comments to show up on a blog post by adding to our `app/templates/blo
   {{/each}}
   </ul>
 </article>
+{% endraw %}
 ```
 
 We first loop through all the `model.comments` with Ember's (relatively new) syntax, defining `|comment|` as the local variable we use to access each `comment` model. Inside of this loop, we output the comment content we defined in our model with `content: DS.attr('string')` with `{{comment.content}}`.
