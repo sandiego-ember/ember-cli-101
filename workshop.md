@@ -1,4 +1,6 @@
-# Ember-CLI 101 Workshop
+---
+layout: default
+---
 
 Welcome to Ember-CLI 101 workshop hosted by [San Diego Ember][] with help from our friends at [Ember-SC][].
 
@@ -136,6 +138,7 @@ The font of our header should have changed.
 Now let's add a big header introducing our blog.  Let's update our `application.hbs` file to add a jumbotron header and wrap our page content in a Bootstrap `container`:
 
 ```handlebars
+{% raw %}
 <div class="jumbotron">
   <div class="container">
     <h1>Bernice's Blog</h1>
@@ -145,6 +148,7 @@ Now let's add a big header introducing our blog.  Let's update our `application.
 <div class="container">
   {{outlet}}
 </div>
+{% endraw %}
 ```
 
 Our site should have refreshed in our web browser now, revealing a big header for our blog.
@@ -157,7 +161,12 @@ We could use fixtures or a mock API, but some friendly back-end developers have 
 
 Our API is setup at https://sandiego-ember-cli-101.herokuapp.com supporting the following endpoints
 
-<table>
+<table class="table table-bordered table-striped">
+    <colgroup>
+        <col class="col-xs-1">
+        <col class="col-xs-3">
+        <col class="col-xs-5">
+    </colgroup>
     <thead>
         <tr>
             <th>Verb</th><th>path</th><th>Description</th>
@@ -347,7 +356,9 @@ export default Ember.Route.extend({
 Let's take a look at the template file that was generated for us in `app/templates/index.hbs`:
 
 ```handlebars
+{% raw %}
 {{outlet}}
+{% endraw %}
 ```
 
 Just this funky thing called `{{outlet}}`.  Ember.js uses handlebars for templating, and the `outlet` variable is a special variable that Ember uses to say "insert any subtemplates here".  If you've done anything with ruby on rails, think `yield` and you'll be awfully close.  Our `index` template is the end of the line for our homepage so let's remove the `{{outlet}}` and add a sample post:
@@ -399,6 +410,7 @@ export default Ember.Route.extend({
 Now we should update our index template to loop over each of our blog posts and render it:
 
 ```handlebars
+{% raw %}
 {{#each model as |post|}}
   <article>
     <header class="page-header">
@@ -406,6 +418,7 @@ Now we should update our index template to loop over each of our blog posts and 
     </header>
     <p>{{post.body}}</p>
   </article>
+{% endraw %}
 {{/each}}
 ```
 
@@ -466,12 +479,14 @@ export default Ember.Route.extend({
 In order to make sure this is working, let's add some markup to `app/blog-post.hbs` that will display a post:
 
 ```handlebars
+{% raw %}
 <article>
   <header class="page-header">
     <h1>{{model.title}}</h1>
   </header>
   <p>{{model.body}}</p>
 </article>
+{% endraw %}
 ```
 
 Since we happen to know there is a blog post with `id: 1` on our API server, we can manually visit `http://localhost:4200/post/1` in our browser to test with an example blog post.
@@ -482,7 +497,12 @@ Ember-Data's REST Adapter comes with some freebies to save us time and unnecessa
 
 Based on our route's dynamic URL segments the REST Adapter will make the proper calls to the application's API for the model hook.
 
-<table>
+<table class="table table-bordered table-striped">
+    <colgroup>
+        <col class="col-xs-2">
+        <col class="col-xs-2">
+        <col class="col-xs-8">
+    </colgroup>
   <thead>
     <tr>
       <td>Action</td>
@@ -530,12 +550,14 @@ Now that we have unique URLs for each blog post, we can link to these URLs from 
 To add these links open up the `app/templates/index.hbs` file and add a `{{link-to}}` helper around our blog title:
 
 ```handlebars
+{% raw %}
 {{#each model as |post|}}
   <article>
     <h2>{{#link-to 'blogPost' post}}{{post.title}}{{/link-to}}</h2>
     {{post.body}}
   </article>
 {{/each}}
+{% endraw %}
 ```
 
 Now take a look at `http://localhost:4200` and a link should appear. **Click it!** And now you're at the page for our blog post.
@@ -622,9 +644,9 @@ test('visit blog post from index', function(assert) {
 
 Verify the tests are passing by visiting `http://localhost:4200/tests` in the browser.
 
-### Blog comments
+## Blog comments
 
-#### Make a comment model
+### Make a comment model
 We want users to be able to comment on blog posts. We've seen how to use `ember generate model` before to create our models. In this case, we want the comment to be a `string`, and our Rails API defines the content of these comments as `content`.
 
 ```console
@@ -673,13 +695,13 @@ But, this isn't going to work as we have it! Remember how our API endpoints were
 
 ```json
 {
-	"blog_post": {
-		"id":2,
-		"title": "Hello, World",
-		"body": "Some body!",
-		"published_date" :null,
-		"comment_ids": [1]
-	}
+    "blog_post": {
+        "id":2,
+        "title": "Hello, World",
+        "body": "Some body!",
+        "published_date" :null,
+        "comment_ids": [1]
+    }
 }
 ```
 
@@ -696,11 +718,12 @@ export default DS.Model.extend({
 
 This tells Ember Data to do exactly what we said above: fetch the comments for these posts by hitting `GET /comments/:id` for every comment on our post. This happens asynchronously, meaning that while the blog post content has loaded, the comments may take a moment to load.
 
-#### Show comments on a blog post
+### Show comments on a blog post
 
 Let's get comments to show up on a blog post by adding to our `app/templates/blog-post.js`:
 
-```
+```handlebars
+{% raw %}
 <article>
   <header class="page-header">
     <h1>{{model.title}}</h1>
@@ -714,6 +737,7 @@ Let's get comments to show up on a blog post by adding to our `app/templates/blo
   {{/each}}
   </ul>
 </article>
+{% endraw %}
 ```
 
 We first loop through all the `model.comments` with Ember's (relatively new) syntax, defining `|comment|` as the local variable we use to access each `comment` model. Inside of this loop, we output the comment content we defined in our model with `content: DS.attr('string')` with `{{comment.content}}`.
