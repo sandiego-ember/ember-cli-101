@@ -622,10 +622,107 @@ test('visit blog post from index', function(assert) {
 
 Verify the tests are passing by visiting `http://localhost:4200/tests` in the browser.
 
+### Blog comments
+
+#### Make a comment model
+We want users to be able to comment on blog posts. We've seen how to use `ember generate model` before to create our models. In this case, we want the comment to be a `string`, and our Rails API defines the content of these comments as `content`.
+
+```console
+$ ember generate model comment content:string
+installing
+    create app/models/comment.js
+installing
+    create tests/unit/models/comment-test.js
+```
+
+We've seen this before.  Let's take a look at the model and see what it contains:
+
+```js
+import DS from 'ember-data';
+
+export default DS.Model.extend({
+  content: DS.attr('string')
+ });
+```
+
+But our comments need to be aware of our blog posts, and vice versa. We're going to add a one-to-many relationship which is built into Ember Data for us.
+
+The comments need a `DS.belongsTo` since a comment belongs to a blog post:
+
+```js
+export default DS.Model.extend({
+  content: DS.attr('string'),
+  blogPost: DS.belongsTo('blogPost')
+});
+```
+
+Whereas the blog posts need a `DS.hasMany` since a blog post has many comments:
+
+```js
+export default DS.Model.extend({
+  title: DS.attr('string'),
+  body: DS.attr('string'),
+  publishedDate: DS.attr('date'),
+  comments: DS.hasMany('comment')
+});
+```
+
+Ember has a number of different ways to define relationships like this. You can [learn more here](http://guides.emberjs.com/v1.11.0/models/defining-models/#toc_defining-relationships).
+
+But, this isn't going to work as we have it! Remember how our API endpoints were `GET /blog_posts/:id` and `GET /comments/:id`? Our API response returns something like this:
+
+```josn
+{
+	"blog_post": {
+		"id":2,
+		"title": "Hello, World",
+		"body": "Some body!",
+		"published_date" :null,
+		"comment_ids": [1]
+	}
+}
+```
+
+Whomever built our API has decided to keep it really lightweight and not embed the comments inside the blog posts. This means we need to fetch the comments for these posts by hitting `GET /comments/:id` for every comment on our post.
+
+Ember Data calls this an asynchronous relationship, and we need to update our model in `app/models/blog-post.js` accordingly:
+
+```js
+export default DS.Model.extend({
+  // We just need to change the `DS.hasMany` to be async
+  comments: DS.hasMany('comment', {async: true})
+});
+```
+
+This tells Ember Data to do exactly what we said above: fetch the comments for these posts by hitting `GET /comments/:id` for every comment on our post. This happens asynchronously, meaning that while the blog post content has loaded, the comments may take a moment to load.
+
+#### Show comments on a blog post
+
+Let's get comments to show up on a blog post by adding to our `app/templates/blog-post.js`:
+
+```
+<article>
+  <header class="page-header">
+    <h1>{{model.title}}</h1>
+  </header>
+  <p>{{model.body}}</p>
+
+  <h2>Comments</h2>
+  <ul>
+  {{#each model.comments as |comment|}}
+    <li>{{comment.content}}</li>
+  {{/each}}
+  </ul>
+</article>
+```
+
+We first loop through all the `model.comments` with Ember's (relatively new) syntax, defining `|comment|` as the local variable we use to access each `comment` model. Inside of this loop, we output the comment content we defined in our model with `content: DS.attr('string')` with `{{comment.content}}`.
+
 ## Blog comment
 
-**TODO** Make blog comment model and relate to post
-**TODO** Make comments show up on blog post detail page
+**TODO** Add acceptance test for comments
+**TODO** Add empty case for comments
+**TODO** Add loading case for comments
 
 ## Submitting a comment
 
