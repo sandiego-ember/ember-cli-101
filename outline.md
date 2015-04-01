@@ -58,23 +58,23 @@ bower.json        config       .ember-cli     .jshintrc   public        tests   
 ```
 
 ##### package.json and node_modules
-The first things to notice is the file `package.json` and the directory `node_modules`. These are from NPM, and if you're new to NPM, take a look at what is in the `package.json` file.  This file contains information about packaging up your application as a module itself, but more importantly for our purposes it contains information about what NPM modules are required to run and develop our app. When using Ember-CLI you won't often come in here and edit this ourselves directly however you'll see that the packages needed for broccoli and Ember-CLI are specified here. If you were to install any Ember-CLI addons yourself, you would see them show up in here as well. The packages specified in `package.json` will be installed under `node_modules/`.
+The first things to notice is the file `package.json` and the directory `node_modules`. These are from NPM, and if you're new to NPM, take a look at what is in the `package.json` file.  This file contains information about what NPM modules are required to run and develop our app. You'll see that the packages needed for broccoli and Ember-CLI are specified here. When using Ember-CLI you won't often edit this directly. If you were to install any Ember-CLI addons yourself, you would see them show up in here as well. The packages specified in `package.json` will be installed in the `node_modules` directory.
 
 ##### bower.json and bower_components
-The next thing to look at is the file `bower.json` and the `bower_components` directory. This coupling is similar to that of the prior. Bower has become the de facto standard in package management for front end applications and our Ember-CLI application will use it to manage our dependencies. If you open up that file you'll see that our application comes out of the box with not only Ember itself but jQuery, Ember Data (a powerful data persistence library), and QUnit (testing framework).
+The next thing to look at is the file `bower.json` and the `bower_components` directory. These are similar to `package.json` and `node_modules`. Bower has become the de facto standard for front-end package management and our Ember-CLI application will use it to manage many of our dependencies. If you open up `bower.json` you'll see that our application comes out of the box with not only Ember but jQuery, Ember Data (for data persistence), and QUnit (for testing).
 
 ##### tests
-Ember-CLI comes out-of-the box with a testing framework and Ember-CLI provides some context and helpers, making it easier to test our applications. You can test models, routes, controllers and components. Possibly the most useful types of tests you can write, however, are unit and acceptance tests.
+Ember-CLI comes out-of-the box with a testing framework and provides some helpers to make testing easier. You can test models, routes, controllers and components. Possibly the most useful types of tests you can write, however, are unit and acceptance tests.
 
-Unit tests allow us to hone in on a specific functionality and does not require the entire ember application be running. This makes it easy to setup and quickly test functional pieces of our application. Acceptance tests, also called integration tests, are used to test the flow of your app. They emulate user interactions throughout your application and using helpers you can assert the expected functionality.
+Unit tests allow us to focus on specific functionality and do not require the entire Ember application be running. Acceptance tests, also called integration tests, are used to test the flow of your app. They emulate user interactions throughout your application and using helpers you can make assertions about the expected functionality.
 
 #### public and vendor
-You may be wondering where images, fonts and other assets go. The answer is the `public` directory. These will be served at the root of your application.
+You may be wondering where images, fonts and other miscellaneous asset files should go. The answer is the `public` directory. These will be served at the root of your application.
 
 Similarly, you may have JavaScript or CSS dependencies that are not in bower. These can be stored in the `vendor` directory. Loading vendor files is not something we will cover in this workshop.
 
 ##### The 'app' directory
-The app directory is where we're going to put all of our application code.  It is carefully structured with an appropriate place for each type of module:
+The app directory is where we're going to put all of our own code.  It is carefully structured with an appropriate place for each type of module:
 
 ```console
 $ ls app
@@ -90,7 +90,7 @@ Some of these may sound familiar to you, while others may be brand new.  Don't w
 
 ### 8. Install Bootstrap
 
-Let's use Bootstrap to make our website look nice.  This step isn't strictly necessary but it'll make our website look snazzier.
+Let's use Bootstrap to make our website look nice.  This step isn't strictly necessary but it'll make our application snazzier.
 
 ```console
 $ ember install:bower bootstrap
