@@ -51,10 +51,10 @@ Modules allow you to divide logical portions of code into smaller, functional pi
 Now that you have an Ember-CLI generated project, let's step inside and start exploring:
 
     $ cd workshop
-    $ ls
-    Brocfile.js             bower.json              node_modules            testem.json
-    README.md               bower_components        package.json            tests
-    app                     config                  public                  vendor
+    $ ls -A
+    app               .bowerrc     dist           .git        node_modules  README.md    tmp
+    bower_components  Brocfile.js  .editorconfig  .gitignore  package.json  testem.json  .travis.yml
+    bower.json        config       .ember-cli     .jshintrc   public        tests        vendor
 
 ##### package.json and node_modules
 The first things to notice is the file `package.json` and the directory `node_modules`. These are from npm, and if you're new to NPM, take a look at what is in the `package.json` file.  This file contains information about packaging up your application as a module itself, but more importantly for our purposes it contains information about what npm modules are required to run and develop our app. When using ember-cli you won't often come in here and edit this ourselves directly however you'll see that the packages needed for broccoli and ember-cli are specified here. If you were to install any ember-cli-addons yourself, you would see them show up in here as well. The packages specified in `package.json` will be installed under `node_modules/`.
@@ -84,6 +84,46 @@ Some of these may sound familiar to you, while others may be brand new.  Don't w
 ### 7. Ready to code!
 0. `ember serve`
 0. http://localhost:4200
+
+### 8. Install Bootstrap
+
+Let's use Bootstrap to make our website look nice.  This step isn't strictly necessary but it'll make our website look snazzier.
+
+    $ ember install:bower bootstrap
+
+Now we need to include the Bootstrap CSS into our build process.  Let's add the following to our `Brocfile.js` below `var app = new EmberApp();` and above `module.exports = app.toTree();`:
+
+    app.import('bower_components/bootstrap/dist/css/bootstrap.css');
+
+Our `Brocfile.js` should look something like this now:
+
+    /* global require, module */
+
+    var EmberApp = require('ember-cli/lib/broccoli/ember-app');
+
+    var app = new EmberApp();
+    app.import('bower_components/bootstrap/dist/css/bootstrap.css');
+    module.exports = app.toTree();
+
+If you already have `http://localhost:4200/` opened in your browser, you'll see it auto-refresh to reveal our new page.  If not, go visit `http://localhost:4200/` now.
+
+The font of our header should have changed.
+
+**ProTip™** Ember-CLI uses live-reloading to persist changes to the browser without the need of reloading. Neat!
+
+Now let's add a big header introducing our blog.  Let's update our `application.hbs` file to add a jumbotron header and wrap our page content in a Bootstrap `container`:
+
+    <div class="jumbotron">
+      <div class="container">
+        <h1>Bernice's Blog</h1>
+      </div>
+    </div>
+
+    <div class="container">
+      {{outlet}}
+    </div>
+
+Our site should have refreshed in our web browser now, revealing a big header for our blog.
 
 ### 8 Diversion: Accessing our API with ember-data
 
@@ -120,7 +160,7 @@ Our API uses snake_case in the JSON it sends, common for Ruby on Rails APIs. Emb
 We can set up an adapter at the level of an individual model, but since we'll be using the same API for all of our models, let's set one up for the entire application:
 
     $ ember g adapter application
-    version: 0.2.0
+    version: 0.2.2
       installing
         create app/adapters/application.js
       installing
@@ -145,7 +185,7 @@ Let's update our file to use the Ember adapter for Rails APIs:
 Finally, to point our Ember app at the API we've set up, let's restart 'ember serve' using the proxy option to point Ember to the api we want to access:
 
     $ ember serve --proxy https://sandiego-ember-cli-101.herokuapp.com
-    version: 0.2.1
+    version: 0.2.2
     Proxying to https://sandiego-ember-cli-101.herokuapp.com
     Livereload server on port 35729
     Serving on http://localhost:4200/
@@ -250,15 +290,13 @@ Let's take a look at the template file that was generated for us in `app/templat
 Just this funky thing called `{{outlet}}`.  Ember.js uses handlebars for templating, and the `outlet` variable is a special variable that Ember uses to say "insert any subtemplates here".  If you've done anything with ruby on rails, think `yield` and you'll be awfully close.  Our `index` template is the end of the line for our homepage so let's remove the `{{outlet}}` and add a sample post:
 
     <article>
-      <h2>My Blog Post</h2>
+      <header class="page-header">
+        <h2>My Blog Post</h2>
+      </header>
       <p>This is a test post.</p>
     </article>
 
-If you already have `http://localhost:4200/` opened in your browser, you'll see it auto-refresh to reveal our new page.  If not, go visit `http://localhost:4200/` now.
-
-Our 'My Blog' header should appear nicely beneath our application header.
-
-**ProTip™** Ember-CLI uses live-reloading to persist changes to the browser without the need of reloading. Neat!
+Go look at the website in your browser again. Our 'My Blog Post' header should appear nicely beneath our big site header.
 
 #### Putting our posts on the page
 
@@ -289,12 +327,14 @@ Instead let's use the data store to retrieve all of our blog posts:
       }
     });
 
-Now we should update our template to loop over each of our blog posts and render it:
+Now we should update our index template to loop over each of our blog posts and render it:
 
     {{#each model as |post|}}
       <article>
-        <h2>{{post.title}}</h2>
-        {{post.body}}
+        <header class="page-header">
+          <h2>{{post.title}}</h2>
+        </header>
+        <p>{{post.body}}</p>
       </article>
     {{/each}}
 
@@ -311,7 +351,7 @@ What if we want to share a link to one of our blog posts?  To do that, we would 
 Let's start by using a generator to make the new files we'll need:
 
     $ ember generate route blogPost --type=resource --path=/post/:blog_post_id
-    version: 0.2.1
+    version: 0.2.2
     installing
       create app/routes/blog-post.js
         create app/templates/blog-post.hbs
@@ -327,15 +367,13 @@ This creates a few files, and also adds some stuff to your  `app/router.js`:
       location: config.locationType
     });
 
-    Router.map(function() {
+    export default Router.map(function() {
       this.resource('blogPost', {
         path: '/post/:blog_post_id'
       }, function() {});
     });
 
-    export default Router;
-
-Here it has defined a resource for us with a dynamic segmant in the route, `:blog_post_id`. This dynamic segment will be extracted from the URL and passed into the `model` hook on the `post` route. We can then use this parameter to look up that exact `blog post` in the store. So let's open up `routes/blog-post.js` that was generated for us and do just that.
+Here it has defined a resource for us with a dynamic segment in the route, `:blog_post_id`. This dynamic segment will be extracted from the URL and passed into the `model` hook on the `post` route. We can then use this parameter to look up that exact `blog-post` in the store. So let's open up `routes/blog-post.js` that was generated for us and do just that.
 
     import Ember from 'ember';
 
@@ -351,17 +389,19 @@ Here it has defined a resource for us with a dynamic segmant in the route, `:blo
 In order to make sure this is working, let's add some markup to `app/blog-post.hbs` that will display a post:
 
     <article>
-      <h2>{{model.title}}</h2>
-      {{model.body}}
+      <header class="page-header">
+        <h1>{{model.title}}</h1>
+      </header>
+      <p>{{model.body}}</p>
     </article>
 
 Since we happen to know there is a blog post with `id: 1` on our API server, we can manually visit `http://localhost:4200/post/1` in our browser to test with an example blog post.
 
 #### The magic of Ember-Data
 
-Ember-Data's REST Adapter comes with some freebies so we can do less work. The adapter that we are using, `ActiveModelAdapter` is an extension of the REST Adapter, so we get to take advantage of this automagic as well if our application follows URL conventiones expected of the REST Adapter.
+Ember-Data's REST Adapter comes with some freebies to save us time and unnecessary code. The adapter that we are using, `ActiveModelAdapter` is an extension of the REST Adapter, so we get to take advantage of this automagic if our application follows the URL conventions expected of the REST Adapter.
 
-Based on the URL the REST Adapter will make the proper action calls to the application's API for the model hook.
+Based on our route's dynamic URL segments the REST Adapter will make the proper calls to the application's API for the model hook.
 
 <table>
   <thead>
@@ -393,22 +433,22 @@ Based on the URL the REST Adapter will make the proper action calls to the appli
       <td>/post</td>
     </tr>
     <tr>
-	  <td>Delete</td>
-	  <td>DELETE</td>
-	  <td>/post/:blog_post_id</td>
+      <td>Delete</td>
+      <td>DELETE</td>
+      <td>/post/:blog_post_id</td>
     </tr>
   </tbody>
 </table>
 
-The store action determines the model name based on the defined dynamic segment. In our example `:blog_post_id` contains the proper snake-case name for our model with suffix `_id` appended.
+The store action determines the model name based on the defined dynamic segment. In our example `:blog_post_id` contains the proper snake-case name for our model with the suffix `_id` appended.
 
-To confirm that this works, **delete the `routes/blog-post.js` file** and verify in your browser (http://localhost:4200/post/1) after the page reloads that you are still able to view the example blog post.
+To confirm that this works, **delete the `routes/blog-post.js` file** and verify that our blog post page (http://localhost:4200/post/1) still works properly after reload.
 
 #### Handlebars link-to helper
 
 Now that we have unique URLs for each blog post, we can link to these URLs from our index route.
 
-To add these links open up the `app/templates/index.hbs` file and add a `{{link-to}}` helper:
+To add these links open up the `app/templates/index.hbs` file and add a `{{link-to}}` helper around our blog title:
 
     {{#each model as |post|}}
       <article>
@@ -467,7 +507,7 @@ Let's first rename this test to something more applicable and remove the stuff i
     test('visit blog post from index', function(assert) {
 
     });
-    
+
 There are a few helpers here that we will use **a lot** when writing acceptance tests.
 
 * `visit(route)`: Visits the given route
@@ -485,7 +525,7 @@ Now we will code out the steps listed above to test that we can link to a blog p
       andThen(function() {
         click(blogSelector);
       });
-      
+
       andThen(function() {
         assert.equal(currentURL(), '/post/1');
       });
