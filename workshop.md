@@ -161,7 +161,12 @@ We could use fixtures or a mock API, but some friendly back-end developers have 
 
 Our API is setup at https://sandiego-ember-cli-101.herokuapp.com supporting the following endpoints
 
-<table>
+<table class="table table-bordered table-striped">
+    <colgroup>
+        <col class="col-xs-1">
+        <col class="col-xs-3">
+        <col class="col-xs-5">
+    </colgroup>
     <thead>
         <tr>
             <th>Verb</th><th>path</th><th>Description</th>
@@ -492,7 +497,12 @@ Ember-Data's REST Adapter comes with some freebies to save us time and unnecessa
 
 Based on our route's dynamic URL segments the REST Adapter will make the proper calls to the application's API for the model hook.
 
-<table>
+<table class="table table-bordered table-striped">
+    <colgroup>
+        <col class="col-xs-2">
+        <col class="col-xs-2">
+        <col class="col-xs-8">
+    </colgroup>
   <thead>
     <tr>
       <td>Action</td>
