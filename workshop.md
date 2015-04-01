@@ -744,7 +744,46 @@ We first loop through all the `model.comments` with Ember's (relatively new) syn
 
 But we also want a good user experience for our readers. They need to know when comments are being loaded and when there aren't any comments at all!
 
-For the loading case, we can hook into 
+For the loading case, we have to think about sort of object our `model.comments` happens to be. It's a [`PromiseManyArray`](http://emberjs.com/api/data/classes/DS.PromiseManyArray.html), and in our templates we can hook into [`PromiseProxyMixin`](http://emberjs.com/api/classes/Ember.PromiseProxyMixin.html)'s loading states. We're given access to: `isPending`, `isSettled`, `isRejected`, and `isFulfilled`.
+
+We can update our template to make use of this new property:
+
+```handlebars
+{% raw %}
+  <h2>Comments</h2>
+  {{#if model.comments.isPending}}
+  	<p>Loading...</p>
+  {{else}}
+  	<ul>
+    ...
+    </ul>
+  {{/if}}
+{% endraw %}
+```
+
+Now our users know when comments are still loading and aren't presented with an ugly empty list of comments. If we wanted to go above and beyond, we could add a loading indicator here to indicate the comments are being loaded, but we'll move on.
+
+We also want to handle the empty case, which is a lot easier. We can make use of Handlebars' `{{#if something}} {{else}} {{/if}}` syntax here:
+
+```handlebars
+{% raw %}
+  <h2>Comments</h2>
+  {{#if model.comments.isPending}}
+    <p>Loading...</p>
+    {{#if model.comments}}
+      <ul>
+      {{#each model.comments as |comment|}}
+        <li>{{comment.content}}</li>
+      {{/each}}
+      </ul>
+    {{else}}
+      <p>There are no comments yet.</p>
+    {{/if}}
+  {{/if}}
+{% endraw %}
+```
+
+If there are comments, we iterate over them. If there are none, we add a helpful message to the user to let them know there aren't any comments yet.
 
 ## Blog comment
 
