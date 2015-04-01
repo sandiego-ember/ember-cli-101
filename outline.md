@@ -28,20 +28,20 @@ Modules allow you to divide logical portions of code into smaller, functional pi
 
 ### 4. Best practices
 0. Code
-    0. camelCase naming
+    0. `camelCase` naming
     0. use modules, avoid globals
     0. reusable code → mixins, extend, add-ons
 0. Files
-    0. kebab-case-naming.js
+    0. `kebab-case-naming.js`
     0. children in subdirectory → `routes/invoices/edit.js` & `routes/invoices/new.js`
 
 ### 5. Setup
-0. Install Git. This can be a bit different depending on your OS but a good resource is [git-scm](http://git-scm.com/downloads).
-0. Install Node.js.  Files and instructions can be found [here](https://nodejs.org/download/).
+0. [Install Git][git-scm]
+0. [Install Node.js][node-install]
 0. Setup NPM for non-sudo installation
     0. NPM is the node package manager.  It will automatically be installed when you install node.
     0. NPM installs packages *locally* (within the directory it is invoked in) for per-project modules, or *globally* for packages you want accessible everywhere.
-    0. However, by default NPM installs global packages in a root-restricted location, requiring SUDO to install.  This creates a **huge** headache.  As an alternative, _before_ you install any packages, follow (this guide)[https://github.com/sindresorhus/guides/blob/master/npm-global-without-sudo.md] to configure your npm to install in your home directory without requiring sudo.
+    0. However, by default NPM installs global packages in a root-restricted location, requiring SUDO to install.  This creates a **huge** headache.  As an alternative, _before_ you install any packages, follow [this guide][npm-g-without-sudo] to configure your npm to install in your home directory without requiring sudo.
 0. Install Bower: `npm i -g bower`
 0. Install Ember-CLI: `npm i -g ember-cli`
 0. And create a new project named 'workshop': `ember new workshop`
@@ -608,3 +608,7 @@ Verify the tests are passing by visiting `http://localhost:4200/tests` in the br
 
 0. Paginate homepage?
 0. Make archive page for previous blog posts?
+
+[git-scm]: http://git-scm.com/downloads
+[npm-g-without-sudo]: https://github.com/sindresorhus/guides/blob/master/npm-global-without-sudo.md
+[node-install]: https://nodejs.org/download/
