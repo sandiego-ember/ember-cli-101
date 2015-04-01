@@ -16,3 +16,6 @@ workshop/libpeerconnection.log
 workshopnpm-debug.log
 workshoptestem.log
 .DS_Store
+
+dist/index.md
+node_modules/

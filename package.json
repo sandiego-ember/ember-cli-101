@@ -1,0 +1,23 @@
+{
+  "name": "ember-cli-101",
+  "version": "0.0.0",
+  "description": "",
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "^3.8.11",
+    "gulp-gh-pages": "^0.4.0",
+    "gulp-rename": "^1.2.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sandiego-ember/ember-cli-101.git"
+  },
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/sandiego-ember/ember-cli-101/issues"
+  },
+  "homepage": "http://sandiego-ember.github.io/ember-cli-101"
+}
