@@ -1,6 +1,6 @@
 # Outline
 
-This workshop is loosely guided by @abuiles book Ember-CLI 101.  You can [get $10 off for San Diego Ember group][ember-cli 101 book].
+This workshop is loosely guided by [Adolfo Builes'][] book Ember-CLI 101.  You can [get $10 off for San Diego Ember group][ember-cli 101 book].
 
 ### 2. Goal: reduce the glue
 There are all sorts of details that go into creating a web application that are repeated over and over again.  Attempting to reduce the work associated with this has given rise to a variety of scaffolding tools and guidelines on best choices.  These scaffolding tools are all trying to do the same thing:  reduce the amount of work necessary to "get started" by providing a set of "best practice" choices that serve right out of the box.  These choices include things like:
@@ -19,8 +19,8 @@ Ember-CLI provides choices for all of the aforementioned areas.  We'll dive into
 0. Generators for all common components
 0. ES6 modules transpiled to AMD
 0. Broccoli build tool for builds. (Lightning fast and extensible with plugin architecture
-0. Asset minification also via Brocolli.
-0. Qunit for testing
+0. Asset minification also via Broccoli.
+0. QUnit for testing
 
 #### Modules
 Modules allow you to divide logical portions of code into smaller, functional pieces and include them as needed. As your application grows, smaller pieces of functional code become easier to manage, support, maintain and test. **TODO: more stuff**
@@ -40,7 +40,7 @@ Modules allow you to divide logical portions of code into smaller, functional pi
 0. Setup NPM for non-sudo installation
     0. NPM is the node package manager.  It will automatically be installed when you install node.
     0. NPM installs packages *locally* (within the directory it is invoked in) for per-project modules, or *globally* for packages you want accessible everywhere.
-    0. However, by default NPM installs global packages in a root-restricted location, requiring SUDO to install.  This creates a **huge** headache.  As an alternative, _before_ you install any packages, follow [this guide][npm-g-without-sudo] to configure your npm to install in your home directory without requiring sudo.
+    0. However, by default NPM installs global packages in a root-restricted location, requiring SUDO to install.  This creates a **huge** headache.  As an alternative, _before_ you install any packages, follow [this guide][npm-g-without-sudo] to configure your NPM to install in your home directory without requiring sudo.
 0. Install Bower: `npm i -g bower`
 0. Install Ember-CLI: `npm i -g ember-cli`
 0. And create a new project named 'workshop': `ember new workshop`
@@ -58,20 +58,20 @@ bower.json        config       .ember-cli     .jshintrc   public        tests   
 ```
 
 ##### package.json and node_modules
-The first things to notice is the file `package.json` and the directory `node_modules`. These are from npm, and if you're new to NPM, take a look at what is in the `package.json` file.  This file contains information about packaging up your application as a module itself, but more importantly for our purposes it contains information about what npm modules are required to run and develop our app. When using Ember-CLI you won't often come in here and edit this ourselves directly however you'll see that the packages needed for broccoli and Ember-CLI are specified here. If you were to install any Ember-CLI addons yourself, you would see them show up in here as well. The packages specified in `package.json` will be installed under `node_modules/`.
+The first things to notice is the file `package.json` and the directory `node_modules`. These are from NPM, and if you're new to NPM, take a look at what is in the `package.json` file.  This file contains information about packaging up your application as a module itself, but more importantly for our purposes it contains information about what NPM modules are required to run and develop our app. When using Ember-CLI you won't often come in here and edit this ourselves directly however you'll see that the packages needed for broccoli and Ember-CLI are specified here. If you were to install any Ember-CLI addons yourself, you would see them show up in here as well. The packages specified in `package.json` will be installed under `node_modules/`.
 
 ##### bower.json and bower_components
-The next thing to look at is the file `bower.json` and the `bower_components` directory. This coupling is similar to that of the prior. Bower has become the defacto standard in package management for front end applications and our Ember-CLI application will use it to manage our dependencies. If you open up that file you'll see that our application comes out of the box with not only Ember itself but jQuery, Ember Data (a powerful data persistence library), and qunit (testing framework).
+The next thing to look at is the file `bower.json` and the `bower_components` directory. This coupling is similar to that of the prior. Bower has become the de facto standard in package management for front end applications and our Ember-CLI application will use it to manage our dependencies. If you open up that file you'll see that our application comes out of the box with not only Ember itself but jQuery, Ember Data (a powerful data persistence library), and QUnit (testing framework).
 
 ##### tests
 Ember-CLI comes out-of-the box with a testing framework and Ember-CLI provides some context and helpers, making it easier to test our applications. You can test models, routes, controllers and components. Possibly the most useful types of tests you can write, however, are unit and acceptance tests.
 
-Unit tests allow us to hone in on a specific functionality and does not require the entire ember application be running. This makes it easy to setup and quickly test functional pieces of our application. Acceptance tests, also called integration tests, are used to test workflows of your app. They emulate user interactions throughout your application and using helpers you can assert the expected functionality.
+Unit tests allow us to hone in on a specific functionality and does not require the entire ember application be running. This makes it easy to setup and quickly test functional pieces of our application. Acceptance tests, also called integration tests, are used to test the flow of your app. They emulate user interactions throughout your application and using helpers you can assert the expected functionality.
 
 #### public and vendor
 You may be wondering where images, fonts and other assets go. The answer is the `public` directory. These will be served at the root of your application.
 
-Similarly, you may have dependencies that are not in bower - stylesheets or javascripts. These can be stored in the `vendor` directory. Loading vendor files is not something we will cover in this workshop.
+Similarly, you may have JavaScript or CSS dependencies that are not in bower. These can be stored in the `vendor` directory. Loading vendor files is not something we will cover in this workshop.
 
 ##### The 'app' directory
 The app directory is where we're going to put all of our application code.  It is carefully structured with an appropriate place for each type of module:
@@ -138,7 +138,7 @@ Our site should have refreshed in our web browser now, revealing a big header fo
 
 ### 8 Diversion: Accessing our API with ember-data
 
-Ember is a client side framework and so when we have data that we want to persist, we need a backend API.  We want an API to serve up our blog posts and allow users to view and submit comments.
+Ember is a client side framework and so when we have data that we want to persist, we need a back-end API.  We want an API to serve up our blog posts and allow users to view and submit comments.
 
 We could use fixtures or a mock API, but some friendly back-end developers have already made a working API for us so let's use that.
 
@@ -188,7 +188,7 @@ export default DS.RESTAdapter.extend({
 });
 ```
 
-We're using an Ember Data builtin adapter called the RESTAdapter. Building a custom adapter isn't too hard, but we don't need to because Ember Data already has an adapter custom built for Rails APIs.
+We're using an Ember Data built-in adapter called the RESTAdapter. Building a custom adapter isn't too hard, but we don't need to because Ember Data already has an adapter custom built for Rails APIs.
 
 Let's update our file to use the Ember adapter for Rails APIs:
 
@@ -199,7 +199,7 @@ export default DS.ActiveModelAdapter.extend({
 });
 ```
 
-Finally, to point our Ember app at the API we've set up, let's restart 'ember serve' using the proxy option to point Ember to the api we want to access:
+Finally, to point our Ember app at the API we've set up, let's restart 'ember serve' using the proxy option to point Ember to the API we want to access:
 
 ```console
 $ ember serve --proxy https://sandiego-ember-cli-101.herokuapp.com
@@ -233,7 +233,7 @@ export default DS.Model.extend({
  });
  ```
 
-What is that funky syntax?  `import DS from 'ember-data'` and `export default DSModel.extend()`?  Welcome to ES6 modules.  The Ecmascript 6 standard specifies this as the standard way to define modules, and thanks to the magic of transpilers we can already use them today even though no browsers actually support ES6.  If you're familiar with node or AMD modules, it should be pretty easy to figure out what's going on here, there's just slightly different syntax.  We're importing a module from 'ember-data' and calling it DS.  Then we're extending the DS.Model class and returning that as the module this class defines.
+What is that funky syntax?  `import DS from 'ember-data'` and `export default DSModel.extend()`?  Welcome to ES6 modules.  The ECMAScript 6 standard specifies this as the standard way to define modules, and thanks to the magic of transpilers we can already use them today even though no browsers actually support ES6.  If you're familiar with node or AMD modules, it should be pretty easy to figure out what's going on here, there's just slightly different syntax.  We're importing a module from 'ember-data' and calling it DS.  Then we're extending the DS.Model class and returning that as the module this class defines.
 
 Looking a little more into the body of the code, we see that our model is specifying exactly what fields it intends to have, in this case a title and a string.  If we later decide we want another field (perhaps a published date) we need only extend this model that the generator created for us.
 
@@ -612,3 +612,4 @@ Verify the tests are passing by visiting `http://localhost:4200/tests` in the br
 [git-scm]: http://git-scm.com/downloads
 [npm-g-without-sudo]: https://github.com/sindresorhus/guides/blob/master/npm-global-without-sudo.md
 [node-install]: https://nodejs.org/download/
+[adolfo builes]: http://blog.abuiles.com/
