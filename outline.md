@@ -8,7 +8,7 @@ There are all sorts of details that go into creating a web application that are 
 
 0. Application directory structure
 0. Generators for common components
-0. Modularity choices (AMD/node modules/etc) TODO:  How to explain this better?
+0. Modularity choices (AMD/node modules/etc) **TODO:  How to explain this better?**
 0. Build system
 0. Asset compilation & minification
 0. Testing framework and setup
@@ -24,7 +24,7 @@ Ember-CLI provides choices for all of the aforementioned areas.  We'll dive into
 0. Qunit for testing
 
 #### Modules
-Modules allow you to divide logical portions of code into smaller, functional pieces and include them as needed. As your application grows, smaller pieces of functional code become easier to manage, support, maintain and test. TODO: more stuff
+Modules allow you to divide logical portions of code into smaller, functional pieces and include them as needed. As your application grows, smaller pieces of functional code become easier to manage, support, maintain and test. **TODO: more stuff**
 
 ### 4. Best practices
 0. Code
