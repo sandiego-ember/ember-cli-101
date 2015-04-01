@@ -50,11 +50,13 @@ Modules allow you to divide logical portions of code into smaller, functional pi
 
 Now that you have an Ember-CLI generated project, let's step inside and start exploring:
 
-    $ cd workshop
-    $ ls -A
-    app               .bowerrc     dist           .git        node_modules  README.md    tmp
-    bower_components  Brocfile.js  .editorconfig  .gitignore  package.json  testem.json  .travis.yml
-    bower.json        config       .ember-cli     .jshintrc   public        tests        vendor
+```console
+$ cd workshop
+$ ls -A
+app               .bowerrc     dist           .git        node_modules  README.md    tmp
+bower_components  Brocfile.js  .editorconfig  .gitignore  package.json  testem.json  .travis.yml
+bower.json        config       .ember-cli     .jshintrc   public        tests        vendor
+```
 
 ##### package.json and node_modules
 The first things to notice is the file `package.json` and the directory `node_modules`. These are from npm, and if you're new to NPM, take a look at what is in the `package.json` file.  This file contains information about packaging up your application as a module itself, but more importantly for our purposes it contains information about what npm modules are required to run and develop our app. When using ember-cli you won't often come in here and edit this ourselves directly however you'll see that the packages needed for broccoli and ember-cli are specified here. If you were to install any ember-cli-addons yourself, you would see them show up in here as well. The packages specified in `package.json` will be installed under `node_modules/`.
@@ -75,9 +77,11 @@ Similarly, you may have dependencies that are not in bower - stylesheets or java
 ##### The 'app' directory
 The app directory is where we're going to put all of our application code.  It is carefully structured with an appropriate place for each type of module:
 
-    $ ls app
-    app.js          controllers     index.html      router.js       styles          views
-    components      helpers         models          routes          templates
+```console
+$ ls app
+app.js          controllers     index.html      router.js       styles          views
+components      helpers         models          routes          templates
+```
 
 Some of these may sound familiar to you, while others may be brand new.  Don't worry yet if you don't know what all of these different pieces are.  We'll get to them one by one.
 
@@ -89,21 +93,27 @@ Some of these may sound familiar to you, while others may be brand new.  Don't w
 
 Let's use Bootstrap to make our website look nice.  This step isn't strictly necessary but it'll make our website look snazzier.
 
-    $ ember install:bower bootstrap
+```console
+$ ember install:bower bootstrap
+```
 
 Now we need to include the Bootstrap CSS into our build process.  Let's add the following to our `Brocfile.js` below `var app = new EmberApp();` and above `module.exports = app.toTree();`:
 
-    app.import('bower_components/bootstrap/dist/css/bootstrap.css');
+```js
+app.import('bower_components/bootstrap/dist/css/bootstrap.css');
+```
 
 Our `Brocfile.js` should look something like this now:
 
-    /* global require, module */
+```js
+/* global require, module */
 
-    var EmberApp = require('ember-cli/lib/broccoli/ember-app');
+var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
-    var app = new EmberApp();
-    app.import('bower_components/bootstrap/dist/css/bootstrap.css');
-    module.exports = app.toTree();
+var app = new EmberApp();
+app.import('bower_components/bootstrap/dist/css/bootstrap.css');
+module.exports = app.toTree();
+```
 
 If you already have `http://localhost:4200/` opened in your browser, you'll see it auto-refresh to reveal our new page.  If not, go visit `http://localhost:4200/` now.
 
@@ -113,15 +123,17 @@ The font of our header should have changed.
 
 Now let's add a big header introducing our blog.  Let's update our `application.hbs` file to add a jumbotron header and wrap our page content in a Bootstrap `container`:
 
-    <div class="jumbotron">
-      <div class="container">
-        <h1>Bernice's Blog</h1>
-      </div>
-    </div>
+```handlebars
+<div class="jumbotron">
+  <div class="container">
+    <h1>Bernice's Blog</h1>
+  </div>
+</div>
 
-    <div class="container">
-      {{outlet}}
-    </div>
+<div class="container">
+  {{outlet}}
+</div>
+```
 
 Our site should have refreshed in our web browser now, revealing a big header for our blog.
 
@@ -159,92 +171,110 @@ Our API uses snake_case in the JSON it sends, common for Ruby on Rails APIs. Emb
 
 We can set up an adapter at the level of an individual model, but since we'll be using the same API for all of our models, let's set one up for the entire application:
 
-    $ ember g adapter application
-    version: 0.2.2
-      installing
-        create app/adapters/application.js
-      installing
-        create tests/unit/adapters/application-test.js
+```console
+$ ember g adapter application
+version: 0.2.2
+  installing
+    create app/adapters/application.js
+  installing
+    create tests/unit/adapters/application-test.js
+```
 
 Let's open up that adapter and see what is there:
 
-    import DS from 'ember-data';
+```js
+import DS from 'ember-data';
 
-    export default DS.RESTAdapter.extend({
-    });
+export default DS.RESTAdapter.extend({
+});
+```
 
 We're using an Ember Data builtin adapter called the RESTAdapter. Building a custom adapter isn't too hard, but we don't need to because Ember Data already has an adapter custom built for Rails APIs.
 
 Let's update our file to use the Ember adapter for Rails APIs:
 
-    import DS from 'ember-data';
+```js
+import DS from 'ember-data';
 
-    export default DS.ActiveModelAdapter.extend({
-    });
+export default DS.ActiveModelAdapter.extend({
+});
+```
 
 Finally, to point our Ember app at the API we've set up, let's restart 'ember serve' using the proxy option to point Ember to the api we want to access:
 
-    $ ember serve --proxy https://sandiego-ember-cli-101.herokuapp.com
-    version: 0.2.2
-    Proxying to https://sandiego-ember-cli-101.herokuapp.com
-    Livereload server on port 35729
-    Serving on http://localhost:4200/
+```console
+$ ember serve --proxy https://sandiego-ember-cli-101.herokuapp.com
+version: 0.2.2
+Proxying to https://sandiego-ember-cli-101.herokuapp.com
+Livereload server on port 35729
+Serving on http://localhost:4200/
+```
 
 ### 9. Blog post model
 
 #### Make a blog post model
 For our test application, we're going to create a blog.  Let's start off by using a generator to create a model for the blogPost.  We'll give it a couple of basic fields and take a look at what happens.
 
-    $ ember generate model blogPost title:string body:string
-    installing
-        create app/models/blog-post.js
-    installing
-        create tests/unit/models/blog-post-test.js
+```console
+$ ember generate model blogPost title:string body:string
+installing
+    create app/models/blog-post.js
+installing
+    create tests/unit/models/blog-post-test.js
+```
 
 OK, Ember-CLI has just created for us both a model file in app/models and a test in tests/unit/models/.  Let's take a look at the model and see what it contains:
 
-    import DS from 'ember-data';
+```js
+import DS from 'ember-data';
 
-    export default DS.Model.extend({
-      title: DS.attr('string'),
-      body: DS.attr('string')
-     });
+export default DS.Model.extend({
+  title: DS.attr('string'),
+  body: DS.attr('string')
+ });
+ ```
 
 What is that funky syntax?  `import DS from 'ember-data'` and `export default DSModel.extend()`?  Welcome to ES6 modules.  The Ecmascript 6 standard specifies this as the standard way to define modules, and thanks to the magic of transpilers we can already use them today even though no browsers actually support ES6.  If you're familiar with node or AMD modules, it should be pretty easy to figure out what's going on here, there's just slightly different syntax.  We're importing a module from 'ember-data' and calling it DS.  Then we're extending the DS.Model class and returning that as the module this class defines.
 
 Looking a little more into the body of the code, we see that our model is specifying exactly what fields it intends to have, in this case a title and a string.  If we later decide we want another field (perhaps a published date) we need only extend this model that the generator created for us.
 
-    import DS from 'ember-data';
+```js
+import DS from 'ember-data';
 
-    export default DS.Model.extend({
-      title: DS.attr('string'),
-      body: DS.attr('string'),
-      publishedDate: DS.attr('date')
-    });
+export default DS.Model.extend({
+  title: DS.attr('string'),
+  body: DS.attr('string'),
+  publishedDate: DS.attr('date')
+});
+```
 
 #### Test our blog post model
 Testing can seem daunting if you put it off for too long so lets get right to it and write a test for that model we just created. Ember-CLI has us covered. Our model generation above also generated a test module for our blog post model:
 
-    $ ls tests/unit/models
-    blog-post-test.js
+```console
+$ ls tests/unit/models
+blog-post-test.js
+```
 
 Pretty cool, huh? Let's open up `tests/unit/models/blog-post-test.js` and see what Ember-CLI generated for us:
 
-    import {
-      moduleForModel,
-      test
-    } from 'ember-qunit';
+```js
+import {
+  moduleForModel,
+  test
+} from 'ember-qunit';
 
-    moduleForModel('blog-post', {
-      // Specify the other units that are required for this test.
+moduleForModel('blog-post', {
+  // Specify the other units that are required for this test.
 
-    });
+});
 
-    test('it exists', function(assert) {
-      var model = this.subject();
-      // var store = this.store();
-      assert.ok(!!model);
-    });
+test('it exists', function(assert) {
+  var model = this.subject();
+  // var store = this.store();
+  assert.ok(!!model);
+});
+```
 
 That looks like a lot! First is the import statement. This is how, using ES6 module syntax, we can import the parts of the `ember-qunit` package we need for our test.
 
@@ -264,37 +294,45 @@ If we want to see blog posts on our website, we need to render them into our HTM
 
 Let's start once again from a generator, this time for our index page route:
 
-    $ ember generate route index
-    installing
-      create app/routes/index.js
-      create app/templates/index.hbs
-    installing
-      create tests/unit/routes/index-test.js
+```console
+$ ember generate route index
+installing
+  create app/routes/index.js
+  create app/templates/index.hbs
+installing
+  create tests/unit/routes/index-test.js
+```
 
 This creates a few files for our index route and template file.
 
 Looking at `app/routes/index.js` we see:
 
-    import Ember from 'ember';
+```js
+import Ember from 'ember';
 
-    export default Ember.Route.extend({
-    });
+export default Ember.Route.extend({
+});
+```
 
 
 #### Update the template
 
 Let's take a look at the template file that was generated for us in `app/templates/index.hbs`:
 
-    {{outlet}}
+```handlebars
+{{outlet}}
+```
 
 Just this funky thing called `{{outlet}}`.  Ember.js uses handlebars for templating, and the `outlet` variable is a special variable that Ember uses to say "insert any subtemplates here".  If you've done anything with ruby on rails, think `yield` and you'll be awfully close.  Our `index` template is the end of the line for our homepage so let's remove the `{{outlet}}` and add a sample post:
 
-    <article>
-      <header class="page-header">
-        <h2>My Blog Post</h2>
-      </header>
-      <p>This is a test post.</p>
-    </article>
+```html
+<article>
+  <header class="page-header">
+    <h2>My Blog Post</h2>
+  </header>
+  <p>This is a test post.</p>
+</article>
+```
 
 Go look at the website in your browser again. Our 'My Blog Post' header should appear nicely beneath our big site header.
 
@@ -306,37 +344,43 @@ First let's add a `model` to our route. One of the jobs of routes is to provide 
 
 We could manually provide list of blog posts as our model:
 
-    import Ember from 'ember';
+```js
+import Ember from 'ember';
 
-    export default Ember.Route.extend({
-      model: function() {
-        return [{
-          title: "First post",
-          body: "This is the post body."
-        }];
-      }
-    });
+export default Ember.Route.extend({
+  model: function() {
+    return [{
+      title: "First post",
+      body: "This is the post body."
+    }];
+  }
+});
+```
 
 Instead let's use the data store to retrieve all of our blog posts:
 
-    import Ember from 'ember';
+```js
+import Ember from 'ember';
 
-    export default Ember.Route.extend({
-      model: function() {
-        return this.store.find('blog-post');
-      }
-    });
+export default Ember.Route.extend({
+  model: function() {
+    return this.store.find('blog-post');
+  }
+});
+```
 
 Now we should update our index template to loop over each of our blog posts and render it:
 
-    {{#each model as |post|}}
-      <article>
-        <header class="page-header">
-          <h2>{{post.title}}</h2>
-        </header>
-        <p>{{post.body}}</p>
-      </article>
-    {{/each}}
+```handlebars
+{{#each model as |post|}}
+  <article>
+    <header class="page-header">
+      <h2>{{post.title}}</h2>
+    </header>
+    <p>{{post.body}}</p>
+  </article>
+{{/each}}
+```
 
 The handlebars each helper allows us to enumerate over a list of items.  This should print out all of our blog posts to the page.  Let's check out our homepage in our browser again and make sure it worked.
 
@@ -350,50 +394,58 @@ What if we want to share a link to one of our blog posts?  To do that, we would 
 
 Let's start by using a generator to make the new files we'll need:
 
-    $ ember generate route blogPost --type=resource --path=/post/:blog_post_id
-    version: 0.2.2
+```console
+$ ember generate route blogPost --type=resource --path=/post/:blog_post_id
+version: 0.2.2
+installing
+  create app/routes/blog-post.js
+    create app/templates/blog-post.hbs
     installing
-      create app/routes/blog-post.js
-        create app/templates/blog-post.hbs
-        installing
-          create tests/unit/routes/blog-post-test.js
+      create tests/unit/routes/blog-post-test.js
+```
 
 This creates a few files, and also adds some stuff to your  `app/router.js`:
 
-    import Ember from 'ember';
-    import config from './config/environment';
+```js
+import Ember from 'ember';
+import config from './config/environment';
 
-    var Router = Ember.Router.extend({
-      location: config.locationType
-    });
+var Router = Ember.Router.extend({
+  location: config.locationType
+});
 
-    export default Router.map(function() {
-      this.resource('blogPost', {
-        path: '/post/:blog_post_id'
-      }, function() {});
-    });
+export default Router.map(function() {
+  this.resource('blogPost', {
+    path: '/post/:blog_post_id'
+  }, function() {});
+});
+```
 
 Here it has defined a resource for us with a dynamic segment in the route, `:blog_post_id`. This dynamic segment will be extracted from the URL and passed into the `model` hook on the `post` route. We can then use this parameter to look up that exact `blog-post` in the store. So let's open up `routes/blog-post.js` that was generated for us and do just that.
 
-    import Ember from 'ember';
+```js
+import Ember from 'ember';
 
-    export default Ember.Route.extend({
-      model: function(params) {
-        return this.store.find('blog-post', params.blog_post_id);
-      }
-    });
+export default Ember.Route.extend({
+  model: function(params) {
+    return this.store.find('blog-post', params.blog_post_id);
+  }
+});
+```
 
 
 #### Update the template
 
 In order to make sure this is working, let's add some markup to `app/blog-post.hbs` that will display a post:
 
-    <article>
-      <header class="page-header">
-        <h1>{{model.title}}</h1>
-      </header>
-      <p>{{model.body}}</p>
-    </article>
+```handlebars
+<article>
+  <header class="page-header">
+    <h1>{{model.title}}</h1>
+  </header>
+  <p>{{model.body}}</p>
+</article>
+```
 
 Since we happen to know there is a blog post with `id: 1` on our API server, we can manually visit `http://localhost:4200/post/1` in our browser to test with an example blog post.
 
@@ -450,12 +502,14 @@ Now that we have unique URLs for each blog post, we can link to these URLs from 
 
 To add these links open up the `app/templates/index.hbs` file and add a `{{link-to}}` helper around our blog title:
 
-    {{#each model as |post|}}
-      <article>
-        <h2>{{#link-to 'blogPost' post}}{{post.title}}{{/link-to}}</h2>
-        {{post.body}}
-      </article>
-    {{/each}}
+```handlebars
+{{#each model as |post|}}
+  <article>
+    <h2>{{#link-to 'blogPost' post}}{{post.title}}{{/link-to}}</h2>
+    {{post.body}}
+  </article>
+{{/each}}
+```
 
 Now take a look at `http://localhost:4200` and a link should appear. **Click it!** And now you're at the page for our blog post.
 
@@ -469,44 +523,50 @@ With some user interaction added to our application we can now create an accepta
 
 First we will have to generate our acceptance test.
 
-    $ ember generate acceptance-test blog-post-show
-    installing
-      create tests/acceptance/blog-post-show-test.js
+```console
+$ ember generate acceptance-test blog-post-show
+installing
+  create tests/acceptance/blog-post-show-test.js
+```
 
 Open the created file `tests/acceptance/blog-post-show-test.js` and see what is there:
 
-    import Ember from 'ember';
-    import {
-      module,
-      test
-    } from 'qunit';
-    import startApp from 'workshop/tests/helpers/start-app';
+```js
+import Ember from 'ember';
+import {
+  module,
+  test
+} from 'qunit';
+import startApp from 'workshop/tests/helpers/start-app';
 
-    var application;
+var application;
 
-    module('Acceptance: BlogPostShow', {
-      beforeEach: function() {
-        application = startApp();
-      },
+module('Acceptance: BlogPostShow', {
+  beforeEach: function() {
+    application = startApp();
+  },
 
-      afterEach: function() {
-        Ember.run(application, 'destroy');
-      }
-    });
+  afterEach: function() {
+    Ember.run(application, 'destroy');
+  }
+});
 
-    test('visiting /blog-post-show', function(assert) {
-      visit('/blog-post-show');
+test('visiting /blog-post-show', function(assert) {
+  visit('/blog-post-show');
 
-      andThen(function() {
-        assert.equal(currentPath(), 'blog-post-show');
-      });
-    });
+  andThen(function() {
+    assert.equal(currentPath(), 'blog-post-show');
+  });
+});
+```
 
 Let's first rename this test to something more applicable and remove the stuff inside.
 
-    test('visit blog post from index', function(assert) {
+```js
+test('visit blog post from index', function(assert) {
 
-    });
+});
+```
 
 There are a few helpers here that we will use **a lot** when writing acceptance tests.
 
@@ -518,18 +578,20 @@ Since `visit` and `click` are both asynchronous helpers we need to wrap subseque
 
 Now we will code out the steps listed above to test that we can link to a blog post from index.
 
-    test('visit blog post from index', function(assert) {
-      visit('/');
-      var blogSelector = 'article:first-of-type a';
+```js
+test('visit blog post from index', function(assert) {
+  visit('/');
+  var blogSelector = 'article:first-of-type a';
 
-      andThen(function() {
-        click(blogSelector);
-      });
+  andThen(function() {
+    click(blogSelector);
+  });
 
-      andThen(function() {
-        assert.equal(currentURL(), '/post/1');
-      });
-    });
+  andThen(function() {
+    assert.equal(currentURL(), '/post/1');
+  });
+});
+```
 
 Verify the tests are passing by visiting `http://localhost:4200/tests` in the browser.
 
