@@ -54,7 +54,7 @@ Modules allow you to divide logical portions of code into smaller, functional pi
     0. `kebab-case-naming.js`
     0. children in subdirectory → `routes/invoices/edit.js` & `routes/invoices/new.js`
 
-## 6. Project Organization: High level
+## Project Organization: High level
 
 Now that you have an Ember-CLI generated project, let's step inside and start exploring:
 
