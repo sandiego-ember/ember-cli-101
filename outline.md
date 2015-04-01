@@ -51,10 +51,10 @@ Modules allow you to divide logical portions of code into smaller, functional pi
 Now that you have an Ember-CLI generated project, let's step inside and start exploring:
 
     $ cd workshop
-    $ ls -a
-    bower_components  Brocfile.js    .ember-cli  .jshintrc     public       tests
-    bower.json        config         .git        node_modules  README.md    .travis.yml
-    app  .bowerrc          .editorconfig  .gitignore  package.json  testem.json  vendor
+    $ ls -A
+    app               .bowerrc     dist           .git        node_modules  README.md    tmp
+    bower_components  Brocfile.js  .editorconfig  .gitignore  package.json  testem.json  .travis.yml
+    bower.json        config       .ember-cli     .jshintrc   public        tests        vendor
 
 ##### package.json and node_modules
 The first things to notice is the file `package.json` and the directory `node_modules`. These are from npm, and if you're new to NPM, take a look at what is in the `package.json` file.  This file contains information about packaging up your application as a module itself, but more importantly for our purposes it contains information about what npm modules are required to run and develop our app. When using ember-cli you won't often come in here and edit this ourselves directly however you'll see that the packages needed for broccoli and ember-cli are specified here. If you were to install any ember-cli-addons yourself, you would see them show up in here as well. The packages specified in `package.json` will be installed under `node_modules/`.
