@@ -367,13 +367,11 @@ This creates a few files, and also adds some stuff to your  `app/router.js`:
       location: config.locationType
     });
 
-    Router.map(function() {
+    export default Router.map(function() {
       this.resource('blogPost', {
         path: '/post/:blog_post_id'
       }, function() {});
     });
-
-    export default Router;
 
 Here it has defined a resource for us with a dynamic segment in the route, `:blog_post_id`. This dynamic segment will be extracted from the URL and passed into the `model` hook on the `post` route. We can then use this parameter to look up that exact `blog-post` in the store. So let's open up `routes/blog-post.js` that was generated for us and do just that.
 
