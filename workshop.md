@@ -1,28 +1,8 @@
-# Ember-CLI 101 Workshop
-
-Welcome to Ember-CLI 101 workshop hosted by [San Diego Ember][] with help from our friends at [Ember-SC][].
+# Outline
 
 This workshop is loosely guided by [Adolfo Builes'][abuiles] book Ember-CLI 101.  You can [get $10 off for San Diego Ember group][ember-cli 101 book].
 
-## Pre-event setup instructions
-
-Please follow these instructions to have your system setup before the workshop begins.
-
-0. [Install Git][git-scm]
-0. [Install Node.js][node-install]
-0. Setup NPM for non-sudo installation
-    0. NPM is the node package manager.  It will automatically be installed when you install node.
-    0. NPM installs packages *locally* (within the directory it is invoked in) for per-project modules, or *globally* for packages you want accessible everywhere.
-    0. However, by default NPM installs global packages in a root-restricted location, requiring SUDO to install.  This creates a **huge** headache.  As an alternative, _before_ you install any packages, follow [this guide][npm-g-without-sudo] to configure your NPM to install in your home directory without requiring sudo.
-0. Install Bower: `npm i -g bower`
-0. Install Ember-CLI: `npm i -g ember-cli`
-0. And create a new project named 'workshop': `ember new workshop`
-
-
-## Introduction
-
-### Ember.js goal: reduce the glue
-
+### 2. Goal: reduce the glue
 Web application development can involve a lot of repetition.  Attempts to reduce the repetition involved in web development has given rise to a variety of scaffolding tools and best practices.  These scaffolding tools are all trying to do the same thing:  reduce the amount of work necessary to "get started" by providing a set of "best practices" that are enabled default.  These choices include things like:
 
 0. Application directory structure
@@ -32,8 +12,7 @@ Web application development can involve a lot of repetition.  Attempts to reduce
 0. Asset compilation & minification
 0. Testing framework and setup
 
-### Ember-CLI
-
+### 3. Ember-CLI
 Ember-CLI provides choices for all of the aforementioned areas.  We'll dive into some of these choices in more detail later but at a high level Ember-CLI builds in:
 
 0. A directory structure which we'll explore more later
@@ -44,12 +23,9 @@ Ember-CLI provides choices for all of the aforementioned areas.  We'll dive into
 0. QUnit for testing
 
 #### Modules
-Modules allow you to divide logical portions of code into smaller, functional pieces and include them as needed. As your application grows, smaller pieces of functional code become easier to manage, support, maintain and test.
+Modules allow you to divide logical portions of code into smaller, functional pieces and include them as needed. As your application grows, smaller pieces of functional code become easier to manage, support, maintain and test. **TODO: more stuff**
 
-**TODO: more stuff**
-
-## Best practices
-
+### 4. Best practices
 0. Code
     0. `camelCase` naming
     0. use modules, avoid globals
@@ -58,21 +34,16 @@ Modules allow you to divide logical portions of code into smaller, functional pi
     0. `kebab-case-naming.js`
     0. children in subdirectory → `routes/invoices/edit.js` & `routes/invoices/new.js`
 
-**TODO: this feels awkward. make this more prose-heavy?**
-
-## Project structure
-
-TODO: explain how ember-cli works
-
-TODO: See outline for things that need to be added
-
-[san diego ember]: http://www.meetup.com/sandiego-ember/
-[ember-sc]: http://www.meetup.com/ember-sc
-
-
-OLD OUTLINE BELOW
-
-
+### 5. Setup
+0. [Install Git][git-scm]
+0. [Install Node.js][node-install]
+0. Setup NPM for non-sudo installation
+    0. NPM is the node package manager.  It will automatically be installed when you install node.
+    0. NPM installs packages *locally* (within the directory it is invoked in) for per-project modules, or *globally* for packages you want accessible everywhere.
+    0. However, by default NPM installs global packages in a root-restricted location, requiring SUDO to install.  This creates a **huge** headache.  As an alternative, _before_ you install any packages, follow [this guide][npm-g-without-sudo] to configure your NPM to install in your home directory without requiring sudo.
+0. Install Bower: `npm i -g bower`
+0. Install Ember-CLI: `npm i -g ember-cli`
+0. And create a new project named 'workshop': `ember new workshop`
 
 ### 6. Project Organization: High level
 
@@ -192,12 +163,24 @@ Our API is setup at https://sandiego-ember-cli-101.herokuapp.com supporting the 
         <tr>
             <td>DELETE</td><td>/blog-posts/:id</td><td>Delete a post</td>
         </tr>
+        <tr>
+            <td>GET</td><td>/comments</td><td>List of blog comments</td>
+        </tr>
+        <tr>
+            <td>GET</td><td>/comments/:id</td><td>Retrieve a comment</td>
+        </tr>
+        <tr>
+            <td>PUT</td><td>/comments/:id</td><td>Update a comment</td>
+        </tr>
+        <tr>
+            <td>DELETE</td><td>/comments/:id</td><td>Delete a comment</td>
+        </tr>
     </tbody>
 </table>
 
-Our API uses `snake_case` in the JSON it sends, common for Ruby on Rails APIs. Ember expects everything to be `camelCase`, so how can we connect these two nicely? Fortunately, we can use an Ember Data adapter to consumer our API and adapter it to the style we use in Ember.
+Our API uses `snake_case` in the JSON it sends, the convention for Ruby on Rails APIs. Ember expects everything to be `camelCase`, so how can we connect these two nicely? Fortunately, we can use an Ember Data adapter to consumer our API and adapt it to the style we use in Ember.
 
-We can set up an adapter at the level of an individual model, but since we'll be using the same API for all of our models, let's set one up for the entire application:
+We can set up an adapter at the level of an individual model, but since we'll be using the same API for all our models, let's set one up for the entire application:
 
 ```console
 $ ember g adapter application
@@ -353,7 +336,7 @@ Let's take a look at the template file that was generated for us in `app/templat
 {{outlet}}
 ```
 
-Just this funky thing called `{{outlet}}`.  Ember.js uses handlebars for templating, and `outlet` is a special variable that Ember uses to say "insert any subtemplates here".  If you've done anything with Ruby on Rails, think `yield` and you'll be awfully close.  Our `index` template is the end of the line for our homepage so let's remove the `{{outlet}}` and add a sample post:
+Just this funky thing called `{{outlet}}`.  Ember.js uses handlebars for templating, and the `outlet` variable is a special variable that Ember uses to say "insert any subtemplates here".  If you've done anything with ruby on rails, think `yield` and you'll be awfully close.  Our `index` template is the end of the line for our homepage so let's remove the `{{outlet}}` and add a sample post:
 
 ```html
 <article>
