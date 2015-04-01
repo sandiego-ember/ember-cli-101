@@ -785,11 +785,7 @@ We also want to handle the empty case, which is a lot easier. We can make use of
 
 If there are comments, we iterate over them. If there are none, we add a helpful message to the user to let them know there aren't any comments yet.
 
-## Blog comment
-
 **TODO** Add acceptance test for comments
-**TODO** Add empty case for comments
-**TODO** Add loading case for comments
 
 ## Submitting a comment
 
