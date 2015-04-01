@@ -647,8 +647,29 @@ export default DS.Model.extend({
  });
 ```
 
-But our comments need to be aware of our blog posts.
+But our comments need to be aware of our blog posts, and vice versa. We're going to add a one-to-many relationship which is built into Ember Data for us.
 
+The comments need a `DS.belongsTo` since a comment belongs to a blog post:
+
+```js
+export default DS.Model.extend({
+  content: DS.attr('string'),
+  blogPost: DS.belongsTo('blogPost')
+});
+```
+
+Whereas the blog posts need a `DS.hasMany` since a blog post has many comments:
+
+```js
+export default DS.Model.extend({
+  title: DS.attr('string'),
+  body: DS.attr('string'),
+  publishedDate: DS.attr('date'),
+  comments: DS.hasMany('comment')
+});
+```
+
+Ember has a number of different ways to define relationships like this. You can [learn more here](http://guides.emberjs.com/v1.11.0/models/defining-models/#toc_defining-relationships).
 
 0. Make comments show up on blog post detail page
 
