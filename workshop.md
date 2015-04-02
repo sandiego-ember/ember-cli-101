@@ -770,6 +770,7 @@ We also want to handle the empty case, which is a lot easier. We can make use of
   <h2>Comments</h2>
   {{#if model.comments.isPending}}
     <p>Loading...</p>
+  {{else}}
     {{#if model.comments}}
       <ul>
       {{#each model.comments as |comment|}}
@@ -785,7 +786,38 @@ We also want to handle the empty case, which is a lot easier. We can make use of
 
 If there are comments, we iterate over them. If there are none, we add a helpful message to the user to let them know there aren't any comments yet.
 
-**TODO** Add acceptance test for comments
+#### Avoiding multiple GET requests for comments
+
+Remember once more how we were hitting `GET /comments/:id` for every comment on our post? Our API developer probably didn't expect us to make 101 server requests every time we hit a blog post with 100 comments.
+
+Ember Data once again has solved our use case with [`coalesceFindRequests`](http://emberjs.com/api/data/classes/DS.ActiveModelAdapter.html#property_coalesceFindRequests), which lumps all of our individual `GET` requests together into a single request. If you had a `blogPost` like the following:
+
+```json
+{
+  "blogPost": {
+    "id": 1,
+    "comment_ids": [1, 2]
+  }
+}
+```
+
+...and set `coalesceFindRequests` to `true` at the adapter level, Ember Data will transform our outbound requests to:
+
+```
+GET /comments?ids[]=1&ids[]=2
+```
+
+Let's do that now. Open up `app/adapters/application.js` and modify it to set `coalesceFindRequests` to `true`:
+
+```js
+export default DS.ActiveModelAdapter.extend({
+  coalesceFindRequests: true
+});
+```
+
+That's it! Our Ember app now automatically hits a single URL for all the comments for a given post.
+
+Not that we haven't written any acceptance tests. We should, but in the interest of time this is left as an exercise for you.
 
 ## Submitting a comment
 

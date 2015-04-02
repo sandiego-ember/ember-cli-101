@@ -7,6 +7,7 @@
   <h2>Comments</h2>
   {{#if model.comments.isPending}}
     <p>Loading...</p>
+  {{else}}
     {{#if model.comments}}
       <ul>
       {{#each model.comments as |comment|}}
