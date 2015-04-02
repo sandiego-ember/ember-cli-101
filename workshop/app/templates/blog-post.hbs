@@ -5,9 +5,24 @@
   <p>{{model.body}}</p>
 
   <h2>Comments</h2>
-  <ul>
-  {{#each model.comments as |comment|}}
-    <li>{{comment.content}}</li>
-  {{/each}}
-  </ul>
+  <form {{action 'addComment' on='submit'}}>
+    <div class="form-group">
+      {{textarea value=commentContent class='form-control' rows='3'}}
+    </div>
+    <button type="submit" class="btn btn-primary">Add My Comment!</button>
+  </form>
+  <hr>
+  {{#if model.comments.isPending}}
+    <p>Loading...</p>
+  {{else}}
+    {{#if model.comments}}
+      <ul>
+      {{#each model.comments as |comment|}}
+        <li>{{comment.content}}</li>
+      {{/each}}
+      </ul>
+    {{else}}
+      <p>There are no comments yet.</p>
+    {{/if}}
+  {{/if}}
 </article>
