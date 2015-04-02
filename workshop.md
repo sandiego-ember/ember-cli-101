@@ -872,13 +872,6 @@ So our `addComment` action first creates a `Comment` record and puts it in our `
 
 Our `createRecord` call returns our newly created comment model.  On this model we immediately call `save` to save it to the server, creating our new comment.  The `save` call returns a promise that will resolve when the API call returns with a success response.  By using our promise's `then` function, we supplied a function to call after our promise resolves.  Our post-resolve function will clear out the comment content so we can submit another comment if we wish.
 
-## More?
-
-**TODO**
-
-0. Paginate homepage?
-0. Make archive page for previous blog posts?
-0. Use gravatar for comments
 
 [ember-cli 101 book]: https://leanpub.com/ember-cli-101/c/san-diego-101
 [git-scm]: http://git-scm.com/downloads
