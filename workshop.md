@@ -360,7 +360,7 @@ Let's take a look at the template file that was generated for us in `app/templat
 {% endraw %}
 ```
 
-Just this funky thing called `{{outlet}}`.  Ember.js uses handlebars for templating, and the `outlet` variable is a special variable that Ember uses to say "insert any subtemplates here".  If you've done anything with Ruby on Rails, think `yield` and you'll be awfully close.  We're not adding any subtemplates to our `index` template so let's remove the `{{outlet}}` and add a sample post:
+Just this funky thing called `{% raw %}{{outlet}}{% endraw %}`.  Ember.js uses handlebars for templating, and the `outlet` variable is a special variable that Ember uses to say "insert any subtemplates here".  If you've done anything with Ruby on Rails, think `yield` and you'll be awfully close.  We're not adding any subtemplates to our `index` template so let's remove the `{{outlet}}` and add a sample post:
 
 ```html
 <article>
