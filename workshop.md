@@ -377,7 +377,7 @@ Go look at the website in your browser again. Our 'My Blog Post' header should a
 
 So far we have only put some HTML on our page. Let's use the API to show our actual blog posts.
 
-First let's add a `model` to our route. One of the jobs of routes is to provide a model to their template. Our model should be a list of blog posts retrieved from our API.
+First let's add a `model` to our route in `app/routes/index.js`. One of the jobs of routes is to provide a model to their template. Our model should be a list of blog posts retrieved from our API.
 
 We could manually provide list of blog posts as our model:
 
