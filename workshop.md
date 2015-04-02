@@ -546,7 +546,7 @@ To confirm that this works, **delete the `routes/blog-post.js` file** and verify
 
 Now that we have unique URLs for each blog post, we can link to these URLs from our index route.
 
-To add these links open up the `app/templates/index.hbs` file and add a `link-to` handlebars helper around our blog title:
+To add these links open up the `app/templates/index.hbs` file and add a `link-to` Handlebars helper around our blog title:
 
 ```handlebars
 {% raw %}
