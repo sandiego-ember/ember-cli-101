@@ -189,6 +189,9 @@ Our API is setup at https://sandiego-ember-cli-101.herokuapp.com supporting the 
             <td>GET</td><td>/comments</td><td>List of blog comments</td>
         </tr>
         <tr>
+            <td>POST</td><td>/comments</td><td>Add a blog comment</td>
+        </tr>
+        <tr>
             <td>GET</td><td>/comments/:id</td><td>Retrieve a comment</td>
         </tr>
         <tr>
