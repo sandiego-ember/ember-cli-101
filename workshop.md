@@ -232,7 +232,7 @@ import DS from 'ember-data';
 export default DS.ActiveModelAdapter.extend();
 ```
 
-Finally, to point our Ember app at the API we've set up, let's restart `ember serve` using the proxy option to point Ember to the API we want to access:
+Finally, to point our Ember app at the API we've set up, let's go back to our server, hit CTRL-C to stop it, and restart `ember serve` using the proxy option to point Ember to the API we want to access:
 
 ```console
 $ ember serve --proxy https://sandiego-ember-cli-101.herokuapp.com
@@ -541,6 +541,8 @@ Based on our route's dynamic URL segments the REST Adapter will make the proper 
 **ProTip™** The store action determines the model name based on the defined dynamic segment. In our example `:blog_post_id` contains the proper snake-case name for our model with the suffix `_id` appended.
 
 To confirm that this works, **delete the `app/routes/blog-post.js` file** and verify that our blog post page (http://localhost:4200/post/1) still works properly after reload.
+
+NOTE:  Ember-CLI created a route test file automatically as well.  To make sure your tests continue to pass, if you delete `app/routes/blog-post.js` you should also delete `tests/unit/routes/blog-post-test.js`
 
 ### Handlebars link-to helper
 
