@@ -313,7 +313,7 @@ test('it exists', function(assert) {
 
 That looks like a lot! First is the `import` statement. This imports the `ember-qunit` package we need for writing our test.
 
-The first section you see, `moduleForModel`, is where any necessary loading for the model testing will be done. Each test is self-contained, so any dependencies (for example if one model depends on another) must be defined here. We don't need to worry about this for our simple blog post model.
+The first section you see, `moduleForModel`, is where any necessary loading for the model testing will be done. Each test is self-contained, so any dependencies (for example if one model depends on another) must be defined here. We don't need to worry about this for our simple blog post model _yet_.
 
 The next section, `test`, shows how we define an individual test. One test can have many assertions but should test only one thing. The generator created a default test which asserts that our model exists.
 
@@ -718,6 +718,31 @@ export default DS.Model.extend({
 ```
 
 This tells Ember Data to do exactly what we said above: fetch the comments for these posts by hitting `GET /comments/:id` for every comment on our post. This happens asynchronously, meaning that while the blog post content has loaded, the comments may take a moment to load.
+
+#### Let the tests know about these dependencies
+
+Remember when we had only one model, with no relationships to other models? Those are easy to unit test in isolation. When the tests need related models though, you must tell Ember's test runner to load these dependencies.
+
+Find the following block in `tests/unit/models/blog-post-test.js`.
+
+```js
+moduleForModel('blog-post', {
+  // Specify the other units that are required for this test.
+  needs: []
+});
+```
+
+You must fill out the `needs` property. To tell Ember about the comment dependency:
+
+```js
+  needs: ['model:comment']
+```
+
+For the same block in `tests/unit/models/comment-test.js`:
+
+```js
+  needs: ['model:blogPost']
+```
 
 ### Show comments on a blog post
 
