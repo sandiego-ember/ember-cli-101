@@ -35,16 +35,16 @@ Ember-CLI provides choices for all of the aforementioned areas.  We'll dive into
 
 0. A directory structure which we'll explore more later
 0. Generators for all common components
-0. ES6 modules transpiled to AMD
+0. ES6 modules (transpiled to AMD, so you can use them in your browser, today)
 0. Broccoli build tool for builds. (Lightning fast and extensible with plugin architecture
-0. Asset minification also via Broccoli.
+0. Asset minification, fingerprinting, also via Broccoli
 0. QUnit for testing
 
 ### Modules
 
 Modules allow you to divide logical portions of code into smaller, functional pieces and include them as needed. As your application grows, smaller pieces of functional code become easier to manage, support, maintain and test. To learn more about JS Modules, check out [jsmodules.io](http://jsmodules.io)
 
-## Best practices
+## Best practices with Ember CLI
 
 0. Code
     0. `camelCase` naming
@@ -133,7 +133,7 @@ module.exports = app.toTree();
 
 The font of our header should have changed.
 
-Now let's add a big header introducing our blog.  Let's update our `application.hbs` file to add a jumbotron header and wrap our page content in a Bootstrap `container`:
+Now let's add a big header introducing our blog.  Let's update our `app/templates/application.hbs` file to add a jumbotron header and wrap our page content in a Bootstrap `container`:
 
 ```handlebars
 {% raw %}
@@ -254,6 +254,8 @@ installing
     create tests/unit/models/blog-post-test.js
 ```
 
+**ProTip™** If you ever need to know what generators are available, just type `ember help generate` and enjoy a deliciously long list of generating goodness.
+
 OK, Ember-CLI has just created for us both a model file in `app/models` and a test file in `tests/unit/models`.  Let's take a look at the model and see what it contains:
 
 ```js
@@ -316,8 +318,6 @@ The first section you see, `moduleForModel`, is where any necessary loading for 
 The next section, `test`, shows how we define an individual test. One test can have many assertions but should test only one thing. The generator created a default test which asserts that our model exists.
 
 Since we have about as much as we can test in here already for our small model, let's make sure the tests pass by running `ember test`.
-
-**ProTip™** If you ever need to know what generators are available, just type `ember help generate` and enjoy a deliciously long list of generating goodness.
 
 ## Adding blog posts to our homepage
 
