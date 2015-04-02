@@ -475,7 +475,7 @@ export default Ember.Route.extend({
 
 ### Update the template
 
-In order to make sure this is working, let's add some markup to `app/blog-post.hbs` that will display a post:
+In order to make sure this is working, let's add some markup to `app/templates/blog-post.hbs` that will display a post:
 
 ```handlebars
 {% raw %}
