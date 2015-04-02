@@ -417,8 +417,8 @@ Now we should update our index template to loop over each of our blog posts and 
     </header>
     <p>{{post.body}}</p>
   </article>
-{% endraw %}
 {{/each}}
+{% endraw %}
 ```
 
 The handlebars each helper allows us to enumerate over a list of items.  This should print out all of our blog posts to the page.  Let's check out our homepage in our browser again and make sure it worked.
