@@ -74,6 +74,10 @@ The first things to notice is the file `package.json` and the directory `node_mo
 
 The next thing to look at is the file `bower.json` and the `bower_components` directory. These are similar to `package.json` and `node_modules`. Bower has become the de facto standard for front-end package management and our Ember-CLI application will use it to manage many of our dependencies. If you open up `bower.json` you'll see that our application comes out of the box with not only Ember but jQuery, Ember Data (for data persistence), and QUnit (for testing).
 
+<aside>
+    (We require Ember Data in this workshop, but note it is not a requirement for Ember development. In your other projects, if you like, you can remove the dependency from `bower.json`.)
+</aside>
+
 #### tests
 
 Ember-CLI comes out-of-the box with a testing framework and provides some helpers to make testing easier. You can test models, routes, controllers and components, and you can test user flows.
