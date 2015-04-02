@@ -750,9 +750,9 @@ We can update our template to make use of this new property:
 {% raw %}
   <h2>Comments</h2>
   {{#if model.comments.isPending}}
-  	<p>Loading...</p>
+    <p>Loading...</p>
   {{else}}
-  	<ul>
+    <ul>
     ...
     </ul>
   {{/if}}
@@ -821,18 +821,18 @@ Not that we haven't written any acceptance tests. We should, but in the interest
 
 We can see existing comments on our blog but users have no way to submit comments yet!  Let's make a form for users to submit comments.
 
-First let's add a form to our template right below `<h2>Comments</h2>`:
+First let's add a form to our template right before our closing `</article>` tag:
 
 ```handlebars
 {% raw %}
+<hr>
+
 <form {{action 'addComment' on='submit'}}>
   <div class="form-group">
     {{textarea value=commentContent class='form-control' rows='3'}}
   </div>
   <button type="submit" class="btn btn-primary">Add My Comment!</button>
 </form>
-
-<hr>
 {% endraw %}
 ```
 
