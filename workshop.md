@@ -719,7 +719,7 @@ This tells Ember Data to do exactly what we said above: fetch the comments for t
 
 ### Show comments on a blog post
 
-Let's get comments to show up on a blog post by adding to our `app/templates/blog-post.js`:
+Let's get comments to show up on a blog post by adding to our `app/templates/blog-post.hbs`:
 
 ```handlebars
 {% raw %}
