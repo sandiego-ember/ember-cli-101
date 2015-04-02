@@ -17,6 +17,7 @@ This workshop is loosely guided by [Adolfo Builes'][abuiles] book Ember-CLI 101.
 0. Install Bower: `npm i -g bower`
 0. Install Ember-CLI: `npm i -g ember-cli`
 0. And create a new project named 'workshop': `ember new workshop`
+0. Change directories into workshop: `cd workshop` and install your local dependencies with: `ember install`
 
 ## Goal: reduce the glue
 
@@ -100,6 +101,7 @@ Some of these may sound familiar to you, while others may be brand new.  Don't w
 
 ## Ready to code!
 
+0. `ember install` (if you didn't do this before)
 0. `ember serve`
 0. http://localhost:4200
 
