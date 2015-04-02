@@ -460,7 +460,7 @@ export default Router.map(function() {
 });
 ```
 
-Here it has defined a resource for us with a dynamic segment in the route, `:blog_post_id`. This dynamic segment will be extracted from the URL and passed into the `model` hook on the `post` route. We can then use this parameter to look up that exact `blog-post` in the store. So let's open up `routes/blog-post.js` that was generated for us and do just that.
+Here it has defined a resource for us with a dynamic segment in the route, `:blog_post_id`. This dynamic segment will be extracted from the URL and passed into the `model` hook on the `post` route. We can then use this parameter to look up that exact `blog-post` in the store. So let's open up `app/routes/blog-post.js` that was generated for us and do just that.
 
 ```js
 import Ember from 'ember';
@@ -540,7 +540,7 @@ Based on our route's dynamic URL segments the REST Adapter will make the proper 
 
 **ProTip™** The store action determines the model name based on the defined dynamic segment. In our example `:blog_post_id` contains the proper snake-case name for our model with the suffix `_id` appended.
 
-To confirm that this works, **delete the `routes/blog-post.js` file** and verify that our blog post page (http://localhost:4200/post/1) still works properly after reload.
+To confirm that this works, **delete the `app/routes/blog-post.js` file** and verify that our blog post page (http://localhost:4200/post/1) still works properly after reload.
 
 ### Handlebars link-to helper
 
