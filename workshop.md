@@ -317,7 +317,7 @@ The first section you see, `moduleForModel`, is where any necessary loading for 
 
 The next section, `test`, shows how we define an individual test. One test can have many assertions but should test only one thing. The generator created a default test which asserts that our model exists.
 
-Since we have about as much as we can test in here already for our small model, let's make sure the tests pass by running `ember test`.
+Since we have about as much as we can test in here already for our small model, let's make sure the tests pass by visiting `http://localhost:4200/tests` in your browser.
 
 **ProTip™** If you ever need to know what generators are available, just type `ember help generate` and enjoy a deliciously long list of generating goodness.
 
