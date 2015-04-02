@@ -724,7 +724,7 @@ This tells Ember Data to do exactly what we said above: fetch the comments for t
 
 #### Let the tests know about these dependencies
 
-Remember when we had only one model, with no relationships to other models? Those are easy to unit test in isolation. When the tests need related models though, you must tell Ember's test runner to load these dependencies.
+Remember when we had only one model, with no relationships to other models? Those are easy to unit test in isolation. At this point, unfortunately, your tests should be failing, because they can't find either the `comment` dependency or `blogPost` dependency. When the tests need related models, you must tell Ember's test runner to load these dependencies.
 
 Find the following block in `tests/unit/models/blog-post-test.js`.
 
@@ -741,7 +741,7 @@ You must fill out the `needs` property. To tell Ember about the comment dependen
   needs: ['model:comment']
 ```
 
-For the same block in `tests/unit/models/comment-test.js`:
+For the same block in `tests/unit/models/comment-test.js`, to tell Ember about the blog post dependency:
 
 ```js
   needs: ['model:blogPost']
