@@ -741,7 +741,7 @@ Let's get comments to show up on a blog post by adding to our `app/templates/blo
 {% endraw %}
 ```
 
-We first loop through all the `model.comments` with Ember's (relatively new) syntax, defining `|comment|` as the local variable we use to access each `comment` model. Inside of this loop, we output the comment content we defined in our model with `content: DS.attr('string')` with `{{comment.content}}`.
+We first loop through all the `model.comments` with Ember's (relatively new) syntax, defining `|comment|` as the local variable we use to access each `comment` model. Inside of this loop, we output the comment content we defined in our model with `content: DS.attr('string')` with `{% raw %}{{comment.content}}{% endraw %}`.
 
 But we also want a good user experience for our readers. They need to know when comments are being loaded and when there aren't any comments at all!
 
