@@ -205,7 +205,7 @@ Our API uses `snake_case` in the JSON it sends, the convention for Ruby on Rails
 We can set up an adapter at the level of an individual model, but since we'll be using the same API for all our models, let's set one up for the entire application:
 
 ```console
-$ ember g adapter application
+$ ember generate adapter application
 version: 0.2.2
   installing
     create app/adapters/application.js
