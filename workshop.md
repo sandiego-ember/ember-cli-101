@@ -151,7 +151,7 @@ Now let's add a big header introducing our blog.  Let's update our `application.
 
 Our site should have refreshed in our web browser now, revealing a big header for our blog.
 
-## Diversion: Accessing our API with ember-data
+## Accessing our API with ember-data
 
 Ember is a client side framework and so when we have data that we want to persist, we need a back-end API.  We want an API to serve up our blog posts and allow users to view and submit comments.
 
@@ -220,18 +220,17 @@ export default DS.RESTAdapter.extend({
 });
 ```
 
-We're using an Ember Data built-in adapter called the RESTAdapter. Building a custom adapter isn't too hard, but we don't need to because Ember Data already has an adapter custom built for Rails APIs.
+We're using an Ember Data built-in adapter called the RESTAdapter. Building a custom adapter isn't too hard, but we don't need to because Ember Data already comes with an adapter designed to interact with Rails APIs.
 
-Let's update our file to use the Ember adapter for Rails APIs:
+Let's update our file to use this adapter:
 
 ```js
 import DS from 'ember-data';
 
-export default DS.ActiveModelAdapter.extend({
-});
+export default DS.ActiveModelAdapter.extend();
 ```
 
-Finally, to point our Ember app at the API we've set up, let's restart 'ember serve' using the proxy option to point Ember to the API we want to access:
+Finally, to point our Ember app at the API we've set up, let's restart `ember serve` using the proxy option to point Ember to the API we want to access:
 
 ```console
 $ ember serve --proxy https://sandiego-ember-cli-101.herokuapp.com
@@ -359,7 +358,7 @@ Let's take a look at the template file that was generated for us in `app/templat
 {% endraw %}
 ```
 
-Just this funky thing called `{{outlet}}`.  Ember.js uses handlebars for templating, and the `outlet` variable is a special variable that Ember uses to say "insert any subtemplates here".  If you've done anything with ruby on rails, think `yield` and you'll be awfully close.  Our `index` template is the end of the line for our homepage so let's remove the `{{outlet}}` and add a sample post:
+Just this funky thing called `{{outlet}}`.  Ember.js uses handlebars for templating, and the `outlet` variable is a special variable that Ember uses to say "insert any subtemplates here".  If you've done anything with Ruby on Rails, think `yield` and you'll be awfully close.  We're not adding any subtemplates to our `index` template so let's remove the `{{outlet}}` and add a sample post:
 
 ```html
 <article>
@@ -872,13 +871,12 @@ So our `addComment` action first creates a `Comment` record and puts it in our `
 
 Our `createRecord` call returns our newly created comment model.  On this model we immediately call `save` to save it to the server, creating our new comment.  The `save` call returns a promise that will resolve when the API call returns with a success response.  By using our promise's `then` function, we supplied a function to call after our promise resolves.  Our post-resolve function will clear out the comment content so we can submit another comment if we wish.
 
-## More?
+## Where do I go next?
 
-**TODO**
+As we said at the beginning, you can [get $10 off for San Diego Ember group][ember-cli 101 book] for the Ember-CLI 101 book. This is a great next step for understanding all the internals of `ember-cli`. Adolfo, the author, is always updating the book to stay current with `ember-cli`.
 
-0. Paginate homepage?
-0. Make archive page for previous blog posts?
-0. Use gravatar for comments
+The Ember guides are great for diving deep once you understand the fundamentals. They're always improving and will be the most up-to-date resource you can use.
+
 
 [ember-cli 101 book]: https://leanpub.com/ember-cli-101/c/san-diego-101
 [git-scm]: http://git-scm.com/downloads
