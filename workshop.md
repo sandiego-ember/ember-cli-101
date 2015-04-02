@@ -879,7 +879,7 @@ Our `createRecord` call returns our newly created comment model.  On this model 
 
 As we said at the beginning, you can [get $10 off for San Diego Ember group][ember-cli 101 book] for the Ember-CLI 101 book. This is a great next step for understanding all the internals of `ember-cli`. Adolfo, the author, is always updating the book to stay current with `ember-cli`.
 
-The Ember guides are great for diving deep once you understand the fundamentals. They're always improving and will be the most up-to-date resource you can use.
+The Ember guides are great for diving deep once you understand the fundamentals. They're always improving and will be the most up-to-date resource you can use. :)
 
 
 [ember-cli 101 book]: https://leanpub.com/ember-cli-101/c/san-diego-101
