@@ -821,7 +821,58 @@ Not that we haven't written any acceptance tests. We should, but in the interest
 
 ## Submitting a comment
 
-**TODO** Add form to submit a comment
+We can see existing comments on our blog but users have no way to submit comments yet!  Let's make a form for users to submit comments.
+
+First let's add a form to our template right below `<h2>Comments</h2>`:
+
+```handlebars
+{% raw %}
+<form {{action 'addComment' on='submit'}}>
+  <div class="form-group">
+    {{textarea value=commentContent class='form-control' rows='3'}}
+  </div>
+  <button type="submit" class="btn btn-primary">Add My Comment!</button>
+</form>
+
+<hr>
+{% endraw %}
+```
+
+We need to handle our `addComment` action and actually save a new comment.  We should use a controller to handle this action.  Let's generate a controller for our blog post page:
+
+```console
+$ ember generate controller blog-post
+installing
+  create app/controllers/blog-post.js
+  installing
+    create tests/unit/controllers/blog-post-test.js
+```
+
+Now let's open up a controller file and add our action:
+
+```javascript
+import Ember from 'ember';
+
+export default Ember.Controller.extend({
+  actions: {
+    addComment: function() {
+      var controller = this;
+      this.store.createRecord('comment', {
+        blogPost: this.get('content'),
+        content: this.get('commentContent')
+      }).save().then(function() {
+        controller.set('commentContent', '');
+      });
+    }
+  }
+});
+```
+
+That's some chaining!  What's going on here?
+
+So our `addComment` action first creates a `Comment` record and puts it in our `ember-data` store in our browser, with the blog post and comment content text fields filled in.  Nothing has been submitted to the server at this point.
+
+Our `createRecord` call returns our newly created comment model.  On this model we immediately call `save` to save it to the server, creating our new comment.  The `save` call returns a promise that will resolve when the API call returns with a success response.  By using our promise's `then` function, we supplied a function to call after our promise resolves.  Our post-resolve function will clear out the comment content so we can submit another comment if we wish.
 
 ## More?
 
