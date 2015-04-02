@@ -129,11 +129,9 @@ app.import('bower_components/bootstrap/dist/css/bootstrap.css');
 module.exports = app.toTree();
 ```
 
-If you already have `http://localhost:4200/` opened in your browser, you'll see it auto-refresh to reveal our new page.  If not, go visit `http://localhost:4200/` now.
+**ProTip™** Ember-CLI uses live-reloading to persist changes to the browser without the need of reloading. As long as `http://localhost:4200/` is open, you'll see changes immediately. Neat! However, if you edit `Brocfile.js`, like we just did in this step, you will need to **kill** and **restart** `ember serve`. Then refresh `http://localhost:4200/`.
 
 The font of our header should have changed.
-
-**ProTip™** Ember-CLI uses live-reloading to persist changes to the browser without the need of reloading. Neat!
 
 Now let's add a big header introducing our blog.  Let's update our `application.hbs` file to add a jumbotron header and wrap our page content in a Bootstrap `container`:
 
