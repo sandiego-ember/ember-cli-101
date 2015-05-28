@@ -110,7 +110,7 @@ Some of these may sound familiar to you, while others may be brand new.  Don't w
 Let's use Bootstrap to make our website look nice.  This step isn't strictly necessary but it'll make our application snazzier.
 
 ```console
-$ ember install:bower bootstrap
+$ bower install bootstrap --save
 ```
 
 Now we need to include the Bootstrap CSS into our build process.  Let's add the following to our `Brocfile.js` below `var app = new EmberApp();` and above `module.exports = app.toTree();`:
